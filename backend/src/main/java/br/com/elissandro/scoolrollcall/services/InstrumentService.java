@@ -1,12 +1,12 @@
 package br.com.elissandro.scoolrollcall.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +26,9 @@ public class InstrumentService {
 	private InstrumentRepository repository;
 
 	@Transactional(readOnly = true)
-	public List<InstrumentDTO> findAll() {
-		List<Instrument> list = repository.findAll();
-		return list.stream().map(x -> new InstrumentDTO(x)).collect(Collectors.toList());
+	public Page<InstrumentDTO> findAllPaged(PageRequest pageRequest) {
+		Page<Instrument> list = repository.findAll(pageRequest);
+		return list.map(x -> new InstrumentDTO(x));
 	}
 
 	@Transactional(readOnly = true)
