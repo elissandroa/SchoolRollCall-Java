@@ -1,0 +1,4 @@
+INSERT INTO tb_instrument (name) VALUES ('Fluguelhorn');
+INSERT INTO tb_instrument (name) VALUES ('Trombone');
+INSERT INTO tb_instrument (name) VALUES ('Trumpet');
+INSERT INTO tb_instrument (name) VALUES ('Tuba');
