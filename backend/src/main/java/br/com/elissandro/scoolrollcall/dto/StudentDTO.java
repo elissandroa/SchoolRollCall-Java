@@ -1,13 +1,24 @@
 package br.com.elissandro.scoolrollcall.dto;
 
-import br.com.elissandro.scoolrollcall.entities.Student;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-public class StudentDTO {
+import br.com.elissandro.scoolrollcall.entities.SchoolTest;
+import br.com.elissandro.scoolrollcall.entities.Student;
+import br.com.elissandro.scoolrollcall.entities.Tutor;
+
+public class StudentDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private String name;
 	private Long instrumentId;
 	private Long addressId;
+	
+	private List<Tutor> tutors = new ArrayList<>();
+	private List<SchoolTest> schoolTests = new ArrayList<>();
 	
 	public StudentDTO() {
 	}
@@ -24,6 +35,12 @@ public class StudentDTO {
 		name = entity.getName();
 		instrumentId = entity.getInstrument().getId();
 		addressId = entity.getAddress().getId();
+	}
+	
+	public StudentDTO(Student entity, Set<Tutor> tutors, List<SchoolTest> schoolTests) {	
+		this(entity);
+		tutors.forEach(tutor -> this.tutors.add(tutor));
+		schoolTests.forEach(test -> this.schoolTests.add(test));
 	}
 
 	public Long getId() {
@@ -58,4 +75,11 @@ public class StudentDTO {
 		this.addressId = addressId;
 	}
 
+	public List<Tutor> getTutors() {
+		return tutors;
+	}
+
+	public List<SchoolTest> getSchoolTests() {
+		return schoolTests;
+	}
 }

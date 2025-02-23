@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +26,8 @@ public class AddressService {
 	private AddressRepository repository;
 
 	@Transactional(readOnly = true)
-	public Page<AddressDTO> findAllPaged(PageRequest pageRequest) {
-		Page<Address> list = repository.findAll(pageRequest);
+	public Page<AddressDTO> findAllPaged(Pageable pageable) {
+		Page<Address> list = repository.findAll(pageable);
 		return list.map(x -> new AddressDTO(x));
 	}
 

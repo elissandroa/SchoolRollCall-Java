@@ -16,30 +16,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.elissandro.scoolrollcall.dto.InstrumentDTO;
-import br.com.elissandro.scoolrollcall.services.InstrumentService;
+import br.com.elissandro.scoolrollcall.dto.DisciplineDTO;
+import br.com.elissandro.scoolrollcall.services.DisciplineService;
 
 @RestController
-@RequestMapping(value = "/instruments")
-public class InstrumentResource {
+@RequestMapping(value = "/Disciplines")
+public class DisciplineResource {
 	
 	@Autowired
-	private InstrumentService service;
+	private DisciplineService service;
 
 	@GetMapping
-	public ResponseEntity<Page<InstrumentDTO>> findAll(Pageable pageable) {
-		Page<InstrumentDTO> list = service.findAllPaged(pageable);
+	public ResponseEntity<Page<DisciplineDTO>> findAll(Pageable pageable) {
+		
+		Page<DisciplineDTO> list = service.findAllPaged(pageable);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<InstrumentDTO> findById(@PathVariable Long id) {
-		InstrumentDTO dto = service.findById(id);
+	public ResponseEntity<DisciplineDTO> findById(@PathVariable Long id) {
+		DisciplineDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 	
 	@PostMapping
-	public ResponseEntity<InstrumentDTO> insert(@RequestBody InstrumentDTO dto) {
+	public ResponseEntity<DisciplineDTO> insert(@RequestBody DisciplineDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();
@@ -47,7 +48,7 @@ public class InstrumentResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<InstrumentDTO> update(@PathVariable Long id, @RequestBody InstrumentDTO dto) {
+	public ResponseEntity<DisciplineDTO> update(@PathVariable Long id, @RequestBody DisciplineDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

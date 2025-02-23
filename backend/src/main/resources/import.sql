@@ -18,4 +18,27 @@ INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, creat
 INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, created_at) VALUES ('Street 3', '789', 'City 3','Bairro 3','State 3','808828', NOW());
 INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, created_at) VALUES ('Street 4', '1011', 'City 4','Bairro 4','State 4','808828', NOW());
 
-INSERT INTO tb_student (name, created_at) VALUES ('Student 1', NOW());
+INSERT INTO tb_student (name, instrument_id, address_id, created_at) VALUES ('Student 1', 1, 1, NOW());
+INSERT INTO tb_student (name, instrument_id, address_id, created_at) VALUES ('Student 2', 2, 2, NOW());
+INSERT INTO tb_student (name, instrument_id, address_id, created_at) VALUES ('Student 3', 3, 3, NOW());
+
+
+INSERT INTO tb_student_school_test (student_id, school_test_id) VALUES (1, 1);
+INSERT INTO tb_student_school_test (student_id, school_test_id) VALUES (1, 2);
+INSERT INTO tb_student_school_test (student_id, school_test_id) VALUES (1, 3);
+INSERT INTO tb_student_school_test (student_id, school_test_id) VALUES (1, 4);
+INSERT INTO tb_student_school_test (student_id, school_test_id) VALUES (2, 1);
+INSERT INTO tb_student_school_test (student_id, school_test_id) VALUES (2, 2);
+INSERT INTO tb_student_school_test (student_id, school_test_id) VALUES (2, 3);
+INSERT INTO tb_student_school_test (student_id, school_test_id) VALUES (2, 4);
+INSERT INTO tb_student_school_test (student_id, school_test_id) VALUES (3, 1);
+INSERT INTO tb_student_school_test (student_id, school_test_id) VALUES (3, 2);
+INSERT INTO tb_student_school_test (student_id, school_test_id) VALUES (3, 3);
+
+INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 1', NOW());
+INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 2', NOW());
+INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 3', NOW());
+INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 4', NOW());
+
+
+

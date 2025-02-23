@@ -11,48 +11,48 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.elissandro.scoolrollcall.dto.InstrumentDTO;
-import br.com.elissandro.scoolrollcall.entities.Instrument;
-import br.com.elissandro.scoolrollcall.repositories.InstrumentRepository;
+import br.com.elissandro.scoolrollcall.dto.DisciplineDTO;
+import br.com.elissandro.scoolrollcall.entities.Discipline;
+import br.com.elissandro.scoolrollcall.repositories.DisciplineRepository;
 import br.com.elissandro.scoolrollcall.services.exceptions.DatabaseException;
 import br.com.elissandro.scoolrollcall.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
 
 @Service
-public class InstrumentService {
+public class DisciplineService {
 	
 	@Autowired
-	private InstrumentRepository repository;
+	private DisciplineRepository repository;
 
 	@Transactional(readOnly = true)
-	public Page<InstrumentDTO> findAllPaged(Pageable pageable) {
-		Page<Instrument> list = repository.findAll(pageable);
-		return list.map(x -> new InstrumentDTO(x));
+	public Page<DisciplineDTO> findAllPaged(Pageable pageable) {
+		Page<Discipline> list = repository.findAll(pageable);
+		return list.map(x -> new DisciplineDTO(x));
 	}
 
 	@Transactional(readOnly = true)
-	public InstrumentDTO findById(Long id) {
-		Optional<Instrument> obj = repository.findById(id);
-		Instrument entity = obj.orElseThrow( () -> new ResourceNotFoundException("Entity not found"));
-		return new InstrumentDTO(entity);
+	public DisciplineDTO findById(Long id) {
+		Optional<Discipline> obj = repository.findById(id);
+		Discipline entity = obj.orElseThrow( () -> new ResourceNotFoundException("Entity not found"));
+		return new DisciplineDTO(entity);
 	}
 
 	@Transactional
-	public InstrumentDTO insert(InstrumentDTO dto) {
-		Instrument entity = new Instrument();
+	public DisciplineDTO insert(DisciplineDTO dto) {
+		Discipline entity = new Discipline();
 		entity.setName(dto.getName());
 		entity = repository.save(entity);
-		return new InstrumentDTO(entity);
+		return new DisciplineDTO(entity);
 	}
 
 	@Transactional
-	public InstrumentDTO update(Long id, InstrumentDTO dto) {
+	public DisciplineDTO update(Long id, DisciplineDTO dto) {
 		try {
-			Instrument entity = repository.getReferenceById(id);
+			Discipline entity = repository.getReferenceById(id);
 			entity.setName(dto.getName());
 			entity = repository.save(entity);
-			return new InstrumentDTO(entity);
+			return new DisciplineDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}

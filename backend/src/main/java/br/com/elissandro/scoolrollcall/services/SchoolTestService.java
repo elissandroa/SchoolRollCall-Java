@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +26,8 @@ public class SchoolTestService {
 	private SchoolTestRepository repository;
 
 	@Transactional(readOnly = true)
-	public Page<SchoolTestDTO> findAllPaged(PageRequest pageRequest) {
-		Page<SchoolTest> list = repository.findAll(pageRequest);
+	public Page<SchoolTestDTO> findAllPaged(Pageable pageable) {
+		Page<SchoolTest> list = repository.findAll(pageable);
 		return list.map(x -> new SchoolTestDTO(x));
 	}
 

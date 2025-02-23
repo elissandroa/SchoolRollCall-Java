@@ -16,30 +16,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.elissandro.scoolrollcall.dto.InstrumentDTO;
-import br.com.elissandro.scoolrollcall.services.InstrumentService;
+import br.com.elissandro.scoolrollcall.dto.StudentDTO;
+import br.com.elissandro.scoolrollcall.services.StudentService;
 
 @RestController
-@RequestMapping(value = "/instruments")
-public class InstrumentResource {
+@RequestMapping(value = "/students")
+public class StudentResource {
 	
 	@Autowired
-	private InstrumentService service;
+	private StudentService service;
 
 	@GetMapping
-	public ResponseEntity<Page<InstrumentDTO>> findAll(Pageable pageable) {
-		Page<InstrumentDTO> list = service.findAllPaged(pageable);
+	public ResponseEntity<Page<StudentDTO>> findAll(Pageable pageable) {
+		Page<StudentDTO> list = service.findAllPaged(pageable);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<InstrumentDTO> findById(@PathVariable Long id) {
-		InstrumentDTO dto = service.findById(id);
+	public ResponseEntity<StudentDTO> findById(@PathVariable Long id) {
+		StudentDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 	
 	@PostMapping
-	public ResponseEntity<InstrumentDTO> insert(@RequestBody InstrumentDTO dto) {
+	public ResponseEntity<StudentDTO> insert(@RequestBody StudentDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();
@@ -47,7 +47,7 @@ public class InstrumentResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<InstrumentDTO> update(@PathVariable Long id, @RequestBody InstrumentDTO dto) {
+	public ResponseEntity<StudentDTO> update(@PathVariable Long id, @RequestBody StudentDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}
