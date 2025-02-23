@@ -20,7 +20,7 @@ import br.com.elissandro.scoolrollcall.dto.DisciplineDTO;
 import br.com.elissandro.scoolrollcall.services.DisciplineService;
 
 @RestController
-@RequestMapping(value = "/Disciplines")
+@RequestMapping(value = "/disciplines")
 public class DisciplineResource {
 	
 	@Autowired
