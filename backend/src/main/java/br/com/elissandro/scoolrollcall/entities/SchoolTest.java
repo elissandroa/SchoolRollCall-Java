@@ -23,7 +23,7 @@ public class SchoolTest implements Serializable {
 	private String name;
 	private String description;
 	private Double grade;
-	
+
 	private Instant createdAt;
 	private Instant updatedAt;
 	
@@ -31,11 +31,11 @@ public class SchoolTest implements Serializable {
 	}
 	
 	public SchoolTest(Long id, String name, String description, Double grade) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.grade = grade;
+		
 	}
 
 	public Long getId() {
@@ -69,6 +69,7 @@ public class SchoolTest implements Serializable {
 	public void setGrade(Double grade) {
 		this.grade = grade;
 	}
+	
 	
 	public Instant getCreatedAt() {
 		return createdAt;

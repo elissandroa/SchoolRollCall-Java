@@ -18,4 +18,4 @@ INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, creat
 INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, created_at) VALUES ('Street 3', '789', 'City 3','Bairro 3','State 3','808828', NOW());
 INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, created_at) VALUES ('Street 4', '1011', 'City 4','Bairro 4','State 4','808828', NOW());
 
-
+INSERT INTO tb_student (name, created_at) VALUES ('Student 1', NOW());
