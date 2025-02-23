@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,26 +13,29 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_instrument")
-public class Instrument implements Serializable {
+@Table(name = "tb_school_test")
+public class SchoolTest implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private String description;
+	private Double grade;
 	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant createdAt;
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
 	
-	public Instrument() {
+	public SchoolTest() {
 	}
 	
-	public Instrument(Long id, String name) {
+	public SchoolTest(Long id, String name, String description, Double grade) {
+		super();
 		this.id = id;
 		this.name = name;
+		this.description = description;
+		this.grade = grade;
 	}
 
 	public Long getId() {
@@ -51,6 +53,30 @@ public class Instrument implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Double getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Double grade) {
+		this.grade = grade;
+	}
+	
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+	
+	public Instant getUpdatedAt() {
+		return updatedAt;
+	}
 	
 	@PrePersist
 	public void prePersist() {
@@ -61,15 +87,6 @@ public class Instrument implements Serializable {
 	@PreUpdate
 	public void preUpdate() {
 		updatedAt = Instant.now();
-	}
-	
-	
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
-
-	public Instant getUpdatedAt() {
-		return updatedAt;
 	}
 
 	@Override
@@ -85,8 +102,9 @@ public class Instrument implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Instrument other = (Instrument) obj;
+		SchoolTest other = (SchoolTest) obj;
 		return Objects.equals(id, other.id);
 	}
-
+	
+	
 }

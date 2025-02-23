@@ -14,8 +14,8 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_instrument")
-public class Instrument implements Serializable {
+@Table(name = "tb_tutor")
+public class Tutor implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -28,10 +28,10 @@ public class Instrument implements Serializable {
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
 	
-	public Instrument() {
+	public Tutor() {
 	}
 	
-	public Instrument(Long id, String name) {
+	public Tutor(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -55,7 +55,6 @@ public class Instrument implements Serializable {
 	@PrePersist
 	public void prePersist() {
 		createdAt = Instant.now();
-		updatedAt = Instant.now();
 	}
 	
 	@PreUpdate
@@ -85,7 +84,7 @@ public class Instrument implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Instrument other = (Instrument) obj;
+		Tutor other = (Tutor) obj;
 		return Objects.equals(id, other.id);
 	}
 
