@@ -41,4 +41,8 @@ INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 3', NOW());
 INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 4', NOW());
 
 
+INSERT INTO tb_teacher (name, phone, address_id, created_at) VALUES ('Teacher 1', '99999999', 1, NOW());
+INSERT INTO tb_teacher (name, phone, address_id, created_at) VALUES ('Teacher 2', '88888888', 2, NOW());
+INSERT INTO tb_teacher (name, phone, address_id, created_at) VALUES ('Teacher 3', '77777777', 3, NOW());
+INSERT INTO tb_teacher (name, phone, address_id, created_at) VALUES ('Teacher 4', '66666666', 4, NOW());
 

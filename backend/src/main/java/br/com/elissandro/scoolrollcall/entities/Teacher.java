@@ -2,41 +2,60 @@ package br.com.elissandro.scoolrollcall.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "tb_discipline")
-public class Discipline implements Serializable {
+@Table(name = "tb_teacher")
+public class Teacher implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	
+	@OneToOne
+	@JoinColumn(name = "address_id")
+	private Address address;
+	private String phone;
 	
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant createdAt;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
 	
-	public Discipline() {
+	@ManyToMany
+	@JoinTable(name = "tb_teacher_discipline",
+		joinColumns = @JoinColumn(name = "teacher_id"),
+		inverseJoinColumns = @JoinColumn(name = "discipline_id")
+	)
+	private Set<Discipline> disciplines = new HashSet<>();
+	
+
+	
+	public Teacher() {
 	}
 	
-	public Discipline(Long id, String name) {
+	public Teacher(Long id, String name, Address address, String phone) {
 		this.id = id;
 		this.name = name;
+		this.address = address;
+		this.phone = phone;
 	}
 
 	public Long getId() {
@@ -54,24 +73,51 @@ public class Discipline implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public Set<Discipline> getDisciplines() {
+		return disciplines;
+	}
 	
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
 	
+	public Instant getUpdatedAt() {
+		return updatedAt;
+	}
 	
 	@PrePersist
 	public void prePersist() {
 		createdAt = Instant.now();
+		updatedAt = Instant.now();
 	}
 	
 	@PreUpdate
 	public void preUpdate() {
 		updatedAt = Instant.now();
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -80,13 +126,8 @@ public class Discipline implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Discipline other = (Discipline) obj;
+		Teacher other = (Teacher) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	@Override
-	public String toString() {
-		return "Discipline [id=" + id + ", name=" + name + "]";
-	}	
 
 }
