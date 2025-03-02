@@ -3,7 +3,6 @@ package br.com.elissandro.scoolrollcall.dto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import br.com.elissandro.scoolrollcall.entities.ClassRoom;
 import br.com.elissandro.scoolrollcall.entities.Student;
@@ -29,7 +28,7 @@ public class ClassRoomDTO implements Serializable {
 		name = entity.getName();
 	}
 	
-	public ClassRoomDTO(ClassRoom entity, Set<Student> students) {
+	public ClassRoomDTO(ClassRoom entity, List<Student> students) {
 		this(entity);
 		students.forEach(student -> this.students.add(new StudentDTO(student)));
 	}

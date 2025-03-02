@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -48,6 +49,10 @@ public class Student implements Serializable {
 	@JoinTable(name = "tb_student_graduation", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "graduation_id"))
 	private Set<Graduation> graduations = new HashSet<>();
 
+	@ManyToOne
+	@JoinColumn(name = "class_room_id")
+	private ClassRoom classRoom;
+	
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant createdAt;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
@@ -103,6 +108,14 @@ public class Student implements Serializable {
 	
 	public Set<Graduation> getGraduations() {
 		return graduations;
+	}
+	
+	public ClassRoom getClassRoom() {
+		return classRoom;
+	}
+	
+	public void setClassRoom(ClassRoom classRoom) {
+		this.classRoom = classRoom;
 	}
 
 	@PrePersist

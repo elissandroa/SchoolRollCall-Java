@@ -34,7 +34,7 @@ public class ClassRoomService {
 	@Transactional(readOnly = true)
 	public Page<ClassRoomDTO> findAllPaged(Pageable pageable) {
 		Page<ClassRoom> list = repository.findAll(pageable);
-		return list.map(x -> new ClassRoomDTO(x, x.getStudents()));
+		return list.map(x -> new ClassRoomDTO(x));
 	}
 
 	@Transactional(readOnly = true)
@@ -49,7 +49,7 @@ public class ClassRoomService {
 		ClassRoom entity = new ClassRoom();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
-		return new ClassRoomDTO(entity, entity.getStudents());
+		return new ClassRoomDTO(entity);
 	}
 
 	
@@ -59,7 +59,7 @@ public class ClassRoomService {
 			ClassRoom entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
-			return new ClassRoomDTO(entity, entity.getStudents());
+			return new ClassRoomDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}

@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.elissandro.scoolrollcall.dto.SchoolRollCallDTO;
-import br.com.elissandro.scoolrollcall.entities.ClassRoom;
 import br.com.elissandro.scoolrollcall.entities.SchoolRollCall;
-import br.com.elissandro.scoolrollcall.repositories.ClassRoomRepository;
+import br.com.elissandro.scoolrollcall.entities.Student;
 import br.com.elissandro.scoolrollcall.repositories.SchoolRollCallRepository;
+import br.com.elissandro.scoolrollcall.repositories.StudentRepository;
 import br.com.elissandro.scoolrollcall.services.exceptions.DatabaseException;
 import br.com.elissandro.scoolrollcall.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,19 +28,19 @@ public class SchoolRollCallService {
 	private SchoolRollCallRepository repository;
 	
 	@Autowired
-	private ClassRoomRepository classRoomRepository;
+	private StudentRepository studentRepository;
 	
 	@Transactional(readOnly = true)
 	public Page<SchoolRollCallDTO> findAllPaged(Pageable pageable) {
 		Page<SchoolRollCall> list = repository.findAll(pageable);
-		return list.map(x -> new SchoolRollCallDTO(x, x.getClassRooms()));
+		return list.map(x -> new SchoolRollCallDTO(x));
 	}
 
 	@Transactional(readOnly = true)
 	public SchoolRollCallDTO findById(Long id) {
 		Optional<SchoolRollCall> obj = repository.findById(id);
 		SchoolRollCall entity = obj.orElseThrow( () -> new ResourceNotFoundException("Entity not found"));
-		return new SchoolRollCallDTO(entity, entity.getClassRooms());
+		return new SchoolRollCallDTO(entity);
 	}
 
 	@Transactional
@@ -48,7 +48,7 @@ public class SchoolRollCallService {
 		SchoolRollCall entity = new SchoolRollCall();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
-		return new SchoolRollCallDTO(entity, entity.getClassRooms());
+		return new SchoolRollCallDTO(entity);
 	}
 
 
@@ -58,7 +58,7 @@ public class SchoolRollCallService {
 			SchoolRollCall entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
-			return new SchoolRollCallDTO(entity, entity.getClassRooms());
+			return new SchoolRollCallDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
@@ -82,10 +82,7 @@ public class SchoolRollCallService {
 		entity.setDate(dto.getDate());
 		entity.setPresence(dto.getPresence());
 		entity.setJustification(dto.getJustification());
-		entity.getClassRooms().clear();
-		dto.getClassRooms().forEach(classRoomDto -> {
-			ClassRoom classRoom = classRoomRepository.getReferenceById(classRoomDto.getId());
-			entity.getClassRooms().add(classRoom);
-		});
+		Student student = studentRepository.getReferenceById(dto.getStudentId());
+		entity.setStudent(student);
 	}
 }

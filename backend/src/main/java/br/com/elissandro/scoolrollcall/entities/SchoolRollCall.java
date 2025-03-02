@@ -3,9 +3,7 @@ package br.com.elissandro.scoolrollcall.entities;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,8 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -36,12 +33,10 @@ public class SchoolRollCall implements Serializable {
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
 	
-	@ManyToMany
-	@JoinTable(name = "tb_school_roll_call_classroom",
-		joinColumns = @JoinColumn(name = "school_roll_call_id"),
-		inverseJoinColumns = @JoinColumn(name = "classroom_id"))
-	private Set<ClassRoom> classRooms = new HashSet<>();
-
+	@ManyToOne
+	@JoinColumn(name = "student_id")
+	private Student student;
+	
 	public SchoolRollCall() {
 	}
 	
@@ -93,13 +88,18 @@ public class SchoolRollCall implements Serializable {
 		return updatedAt;
 	}
 	
-	public Set<ClassRoom> getClassRooms() {
-		return classRooms;
+	public Student getStudent() {
+		return student;
+	}
+	
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 	
 	@PrePersist
 	public void prePersist() {
 		createdAt = Instant.now();
+		updatedAt = Instant.now();
 	}
 	@PreUpdate
 	public void preUpdate() {

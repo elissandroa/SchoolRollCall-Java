@@ -2,18 +2,17 @@ package br.com.elissandro.scoolrollcall.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -32,10 +31,8 @@ public class ClassRoom implements Serializable {
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
 	
-	@ManyToMany
-	@JoinTable(name = "tb_classroom_student", joinColumns = @JoinColumn(name = "classroom_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
-	private Set<Student> students = new HashSet<>();
-	
+	@OneToMany(mappedBy = "classRoom", cascade = CascadeType.ALL)
+	private List<Student> students = new ArrayList<>();
 	public ClassRoom() {
 	}
 	
@@ -60,7 +57,7 @@ public class ClassRoom implements Serializable {
 		this.name = name;
 	}
 	
-	public Set<Student> getStudents() {
+	public List<Student> getStudents() {
 		return students;
 	}
 

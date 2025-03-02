@@ -2,11 +2,7 @@ package br.com.elissandro.scoolrollcall.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
-import br.com.elissandro.scoolrollcall.entities.ClassRoom;
 import br.com.elissandro.scoolrollcall.entities.SchoolRollCall;
 
 public class SchoolRollCallDTO implements Serializable{
@@ -16,16 +12,19 @@ public class SchoolRollCallDTO implements Serializable{
 	private LocalDate date;
 	private Boolean presence;
 	private String justification;
+	private Long studentId;
 	
-	private List<ClassRoomDTO> classRooms = new ArrayList<>();
-
+	private StudentDTO student;
+	
 	public SchoolRollCallDTO() {
 	}
 	
-	public SchoolRollCallDTO(Long id, LocalDate date, Boolean presence, String justification) {
+	public SchoolRollCallDTO(Long id, LocalDate date, Boolean presence, String justification, Long studentId) {	
 		this.id = id;
 		this.date = date;
 		this.presence = presence;
+		this.justification = justification;
+		this.studentId = studentId;
 	}
 	
 	public SchoolRollCallDTO(SchoolRollCall entity) {
@@ -33,14 +32,10 @@ public class SchoolRollCallDTO implements Serializable{
 		date = entity.getDate();
 		presence = entity.getPresence();
 		justification = entity.getJustification();
+		studentId = entity.getStudent().getId();
+		student = new StudentDTO(entity.getStudent());
 	}
 	
-	public SchoolRollCallDTO(SchoolRollCall entity, Set<ClassRoom> classRooms) {
-		this(entity);
-		classRooms.forEach(classRoom -> this.classRooms.add(new ClassRoomDTO(classRoom)));	
-	}
-	
-
 	public Long getId() {
 		return id;
 	}
@@ -72,8 +67,20 @@ public class SchoolRollCallDTO implements Serializable{
 	public void setJustification(String justification) {
 		this.justification = justification;
 	}
+
+	public Long getStudentId() {
+		return studentId;
+	}
 	
-	public List<ClassRoomDTO> getClassRooms() {
-		return classRooms;
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
+	}
+	
+	public StudentDTO getStudent() {
+		return student;
+	}
+	
+	public void setStudent(StudentDTO student) {
+		this.student = student;
 	}
 }

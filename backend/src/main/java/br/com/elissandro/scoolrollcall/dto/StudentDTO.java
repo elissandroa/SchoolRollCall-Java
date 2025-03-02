@@ -24,17 +24,21 @@ public class StudentDTO implements Serializable {
 	private List<AddressDTO> addresses = new ArrayList<>();
 	private List<GraduationDTO> graduations = new ArrayList<>();
 	
+	private ClassRoomDTO classRoom;
+	
 	public StudentDTO() {
 	}
 	
-	public StudentDTO(Long id, String name, Long instrumentId, Long addressId) {
+	public StudentDTO(Long id, String name, Long instrumentId, Long addressId, ClassRoomDTO classRoom) {
 		this.id = id;
 		this.name = name;
+		this.classRoom = classRoom;
 	}
 	
 	public StudentDTO(Student entity) {
 		id = entity.getId();
 		name = entity.getName();
+		classRoom = new ClassRoomDTO(entity.getClassRoom());
 	}
 	
 	public StudentDTO(Student entity, Set<Tutor> tutors, 
@@ -82,6 +86,14 @@ public class StudentDTO implements Serializable {
 	
 	public List<GraduationDTO> getGraduations() {
 		return graduations;
+	}
+	
+	public ClassRoomDTO getClassRoom() {
+		return classRoom;
+	}
+	
+	public void setClassRoom(ClassRoomDTO classRoom) {
+		this.classRoom = classRoom;
 	}
 
 }
