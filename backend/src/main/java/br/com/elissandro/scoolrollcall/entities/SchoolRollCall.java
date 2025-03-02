@@ -1,10 +1,13 @@
 package br.com.elissandro.scoolrollcall.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +15,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,26 +27,29 @@ public class SchoolRollCall implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private LocalDate date;
 	private Boolean presence;
-	
-	@OneToOne
-	@JoinColumn(name = "classroom_id")
-	private ClassRoom classRoom;
+	@Column(columnDefinition = "TEXT")
+	private String justification;
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private Instant createdAt;
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private Instant updatedAt;
 	
 	@ManyToMany
-	@JoinTable(name = "tb_school_roll_call_student",
+	@JoinTable(name = "tb_school_roll_call_classroom",
 		joinColumns = @JoinColumn(name = "school_roll_call_id"),
-		inverseJoinColumns = @JoinColumn(name = "student_id")
-	)
-	private Set<Student> students = new HashSet<>();
-	
+		inverseJoinColumns = @JoinColumn(name = "classroom_id"))
+	private Set<ClassRoom> classRooms = new HashSet<>();
+
 	public SchoolRollCall() {
 	}
 	
-	public SchoolRollCall(Long id, Boolean presence, ClassRoom classRoom) {
+	public SchoolRollCall(Long id, LocalDate date, Boolean presence, String justification) {
 		this.id = id;
+		this.date = date;
 		this.presence = presence;
-		this.classRoom = classRoom;
+		this.justification = justification;
 	}
 
 	public Long getId() {
@@ -52,6 +59,14 @@ public class SchoolRollCall implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public LocalDate getDate() {
+		return date;
+	}
+	
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
 
 	public Boolean getPresence() {
 		return presence;
@@ -60,17 +75,35 @@ public class SchoolRollCall implements Serializable {
 	public void setPresence(Boolean presence) {
 		this.presence = presence;
 	}
-
-	public ClassRoom getClassRoom() {
-		return classRoom;
+	
+	public String getJustification() {
+		return justification;
 	}
-
-	public void setClassRoom(ClassRoom classRoom) {
-		this.classRoom = classRoom;
+	
+	public void setJustification(String justification) {
+		this.justification = justification;
 	}
+	
 
-	public Set<Student> getStudents() {
-		return students;
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+	
+	public Instant getUpdatedAt() {
+		return updatedAt;
+	}
+	
+	public Set<ClassRoom> getClassRooms() {
+		return classRooms;
+	}
+	
+	@PrePersist
+	public void prePersist() {
+		createdAt = Instant.now();
+	}
+	@PreUpdate
+	public void preUpdate() {
+		updatedAt = Instant.now();
 	}
 
 	@Override

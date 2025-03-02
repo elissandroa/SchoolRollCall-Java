@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import br.com.elissandro.scoolrollcall.entities.SchoolRollCall;
+import br.com.elissandro.scoolrollcall.entities.ClassRoom;
+import br.com.elissandro.scoolrollcall.entities.Student;
 
 public class ClassRoomDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -13,7 +14,7 @@ public class ClassRoomDTO implements Serializable {
 	private Long id;
 	private String name;
 	
-	private List<SchoolRollCall> schoolrollcalls = new ArrayList<>();
+	private List<StudentDTO> students = new ArrayList<>();
 	
 	public ClassRoomDTO() {
 	}
@@ -23,14 +24,14 @@ public class ClassRoomDTO implements Serializable {
 		this.name = name;
 	}
 	
-	public ClassRoomDTO(ClassRoomDTO entity) {
+	public ClassRoomDTO(ClassRoom entity) {
 		id = entity.getId();
 		name = entity.getName();
 	}
 	
-	public ClassRoomDTO(ClassRoomDTO entity, Set<SchoolRollCall> schoolrollcalls) {
+	public ClassRoomDTO(ClassRoom entity, Set<Student> students) {
 		this(entity);
-		schoolrollcalls.forEach(x -> this.schoolrollcalls.add(x));
+		students.forEach(student -> this.students.add(new StudentDTO(student)));
 	}
 
 	public Long getId() {
@@ -49,8 +50,8 @@ public class ClassRoomDTO implements Serializable {
 		this.name = name;
 	}
 	
-	public List<SchoolRollCall> getSchoolrollcalls() {
-		return schoolrollcalls;
+	public List<StudentDTO> getStudents() {
+		return students;
 	}
 
 }

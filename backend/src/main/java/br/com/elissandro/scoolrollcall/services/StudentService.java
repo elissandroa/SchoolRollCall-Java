@@ -16,6 +16,7 @@ import br.com.elissandro.scoolrollcall.entities.Address;
 import br.com.elissandro.scoolrollcall.entities.Instrument;
 import br.com.elissandro.scoolrollcall.entities.Student;
 import br.com.elissandro.scoolrollcall.repositories.AddressRepository;
+import br.com.elissandro.scoolrollcall.repositories.GraduationRepository;
 import br.com.elissandro.scoolrollcall.repositories.InstrumentRepository;
 import br.com.elissandro.scoolrollcall.repositories.SchoolTestRepository;
 import br.com.elissandro.scoolrollcall.repositories.StudentRepository;
@@ -42,19 +43,24 @@ public class StudentService {
 	@Autowired
 	private AddressRepository addressRepository;
 	
+	@Autowired
+	private GraduationRepository graduationRepository;
+	
 	
 
 	@Transactional(readOnly = true)
 	public Page<StudentDTO> findAllPaged(Pageable pageable) {
 		Page<Student> list = repository.findAll(pageable);
-		return list.map(x -> new StudentDTO(x));
+		return list.map(x -> new StudentDTO(x, x.getTutors(), x.getSchoolTests(), 
+				x.getInstruments(), x.getAddresses(), x.getGraduations()));
 	}
 
 	@Transactional(readOnly = true)
 	public StudentDTO findById(Long id) {
 		Optional<Student> obj = repository.findById(id);
 		Student entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-		return new StudentDTO(entity, entity.getTutors(), entity.getSchoolTests());
+		return new StudentDTO(entity, entity.getTutors(), entity.getSchoolTests(),
+				entity.getInstruments(), entity.getAddresses(), entity.getGraduations());
 	}
 
 	@Transactional
@@ -62,7 +68,8 @@ public class StudentService {
 		Student entity = new Student();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
-		return new StudentDTO(entity);
+		return new StudentDTO(entity, entity.getTutors(), entity.getSchoolTests(), 
+				entity.getInstruments(), entity.getAddresses(), entity.getGraduations());
 	}
 
 	@Transactional
@@ -71,7 +78,8 @@ public class StudentService {
 			Student entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
-			return new StudentDTO(entity);
+			return new StudentDTO(entity,entity.getTutors(), entity.getSchoolTests(), 
+					entity.getInstruments(), entity.getAddresses(), entity.getGraduations());
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
@@ -94,22 +102,28 @@ public class StudentService {
 	
 	private void copyDtoToEntity(StudentDTO dto, Student entity) {
 		entity.setName(dto.getName());
-		Instrument entityInstrument = new Instrument();
-		entityInstrument.setId(dto.getInstrumentId());
-		entity.setInstrument(instrumentRepository.getReferenceById(entityInstrument.getId()));
+		dto.getAddresses().forEach(addressDto -> {
+			Address address = addressRepository.getReferenceById(addressDto.getId());
+			entity.getAddresses().add(address);
+		});
 		
-		Address entityAddress = new Address();
-		entityAddress.setId(dto.getAddressId());
-		entity.setAddress(addressRepository.getReferenceById(entityAddress.getId()));
+		dto.getInstruments().forEach(instrumentDto -> {
+			Instrument instrument = instrumentRepository.getReferenceById(instrumentDto.getId());
+			entity.getInstruments().add(instrument);
+		});
 		
-		entity.getTutors().clear();
+		dto.getSchoolTests().forEach(schoolTestDto -> {
+			entity.getSchoolTests().add(schoolTestRepository.getReferenceById(schoolTestDto.getId()));
+		});
+		
 		dto.getTutors().forEach(tutorDto -> {
 			entity.getTutors().add(tutorRepository.getReferenceById(tutorDto.getId()));
 		});
-		entity.getSchoolTests().clear();
-		dto.getSchoolTests().forEach(testDto -> {
-			entity.getSchoolTests().add(schoolTestRepository.getReferenceById(testDto.getId()));
+		
+		dto.getGraduations().forEach(graduationDto -> {
+			entity.getGraduations().add(graduationRepository.getReferenceById(graduationDto.getId()));
 		});
+
 	}
 
 }

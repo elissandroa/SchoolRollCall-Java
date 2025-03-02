@@ -1,41 +1,45 @@
 package br.com.elissandro.scoolrollcall.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import br.com.elissandro.scoolrollcall.entities.ClassRoom;
 import br.com.elissandro.scoolrollcall.entities.SchoolRollCall;
-import br.com.elissandro.scoolrollcall.entities.Student;
 
 public class SchoolRollCallDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	private LocalDate date;
 	private Boolean presence;
-	private Long classRoomId;
+	private String justification;
 	
-	private List<Student> students = new ArrayList<>();
-	
+	private List<ClassRoomDTO> classRooms = new ArrayList<>();
+
 	public SchoolRollCallDTO() {
 	}
 	
-	public SchoolRollCallDTO(Long id, Boolean presence, Long classRoomId) {
+	public SchoolRollCallDTO(Long id, LocalDate date, Boolean presence, String justification) {
 		this.id = id;
+		this.date = date;
 		this.presence = presence;
-		this.classRoomId = classRoomId;
 	}
 	
 	public SchoolRollCallDTO(SchoolRollCall entity) {
 		id = entity.getId();
+		date = entity.getDate();
 		presence = entity.getPresence();
-		classRoomId = entity.getClassRoom().getId();
+		justification = entity.getJustification();
 	}
 	
-	public SchoolRollCallDTO(SchoolRollCall entity, Set<Student> students) {
+	public SchoolRollCallDTO(SchoolRollCall entity, Set<ClassRoom> classRooms) {
 		this(entity);
-		students.forEach(student -> this.students.add(student));
+		classRooms.forEach(classRoom -> this.classRooms.add(new ClassRoomDTO(classRoom)));	
 	}
+	
 
 	public Long getId() {
 		return id;
@@ -43,6 +47,14 @@ public class SchoolRollCallDTO implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public LocalDate getDate() {
+		return date;
+	}
+	
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 
 	public Boolean getPresence() {
@@ -52,16 +64,16 @@ public class SchoolRollCallDTO implements Serializable{
 	public void setPresence(Boolean presence) {
 		this.presence = presence;
 	}
-
-	public Long getClassRoomId() {
-		return classRoomId;
+	
+	public String getJustification() {
+		return justification;
 	}
-
-	public void setClassRoomId(Long classRoomId) {
-		this.classRoomId = classRoomId;
+	
+	public void setJustification(String justification) {
+		this.justification = justification;
 	}
-
-	public List<Student> getStudents() {
-		return students;
+	
+	public List<ClassRoomDTO> getClassRooms() {
+		return classRooms;
 	}
 }

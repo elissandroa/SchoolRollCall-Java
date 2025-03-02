@@ -12,64 +12,66 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.elissandro.scoolrollcall.dto.AddressDTO;
-import br.com.elissandro.scoolrollcall.dto.DisciplineDTO;
-import br.com.elissandro.scoolrollcall.dto.TeacherDTO;
+import br.com.elissandro.scoolrollcall.dto.ClassRoomDTO;
+import br.com.elissandro.scoolrollcall.dto.SchoolDTO;
 import br.com.elissandro.scoolrollcall.entities.Address;
-import br.com.elissandro.scoolrollcall.entities.Discipline;
-import br.com.elissandro.scoolrollcall.entities.Teacher;
+import br.com.elissandro.scoolrollcall.entities.ClassRoom;
+import br.com.elissandro.scoolrollcall.entities.School;
 import br.com.elissandro.scoolrollcall.repositories.AddressRepository;
-import br.com.elissandro.scoolrollcall.repositories.DisciplineRepository;
-import br.com.elissandro.scoolrollcall.repositories.TeacherRepository;
+import br.com.elissandro.scoolrollcall.repositories.ClassRoomRepository;
+import br.com.elissandro.scoolrollcall.repositories.SchoolRepository;
 import br.com.elissandro.scoolrollcall.services.exceptions.DatabaseException;
 import br.com.elissandro.scoolrollcall.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
 
 @Service
-public class TeacherService {
+public class SchoolService {
 	
 	@Autowired
-	private TeacherRepository repository;
+	private SchoolRepository repository;
 	
 	@Autowired
 	private AddressRepository addressRepository;
 	
 	@Autowired
-	private DisciplineRepository disciplineRepository;
+	private ClassRoomRepository classRoomRepository;
 
 	@Transactional(readOnly = true)
-	public Page<TeacherDTO> findAllPaged(Pageable pageable) {
-		Page<Teacher> list = repository.findAll(pageable);
-		return list.map(x -> new TeacherDTO(x, x.getDisciplines(), x.getAddresses()));
+	public Page<SchoolDTO> findAllPaged(Pageable pageable) {
+		Page<School> list = repository.findAll(pageable);
+		return list.map(x -> new SchoolDTO(x, x.getClassRooms(), x.getAddress()));
 	}
 
 	@Transactional(readOnly = true)
-	public TeacherDTO findById(Long id) {
-		Optional<Teacher> obj = repository.findById(id);
-		Teacher entity = obj.orElseThrow( () -> new ResourceNotFoundException("Entity not found"));
-		return new TeacherDTO(entity, entity.getDisciplines(), entity.getAddresses());
+	public SchoolDTO findById(Long id) {
+		Optional<School> obj = repository.findById(id);
+		School entity = obj.orElseThrow( () -> new ResourceNotFoundException("Entity not found"));
+		return new SchoolDTO(entity, entity.getClassRooms(), entity.getAddress());
 	}
 
 	@Transactional
-	public TeacherDTO insert(TeacherDTO dto) {
-		Teacher entity = new Teacher();
+	public SchoolDTO insert(SchoolDTO dto) {
+		School entity = new School();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
-		return new TeacherDTO(entity, entity.getDisciplines(), entity.getAddresses());
+		return new SchoolDTO(entity, entity.getClassRooms(), entity.getAddress());
 	}
 
 	@Transactional
-	public TeacherDTO update(Long id, TeacherDTO dto) {
+	public SchoolDTO update(Long id, SchoolDTO dto) {
 		try {
-			Teacher entity = repository.getReferenceById(id);
+			School entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
-			return new TeacherDTO(entity, entity.getDisciplines(), entity.getAddresses());
+			return new SchoolDTO(entity, entity.getClassRooms(), entity.getAddress());
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
 	}
 	
+	
+
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public void delete(Long id) {
 		try {
@@ -83,23 +85,20 @@ public class TeacherService {
 			throw new DatabaseException("Integrity violation");
 		}
 	}
-	
-	private void copyDtoToEntity(TeacherDTO dto, Teacher entity) {
+
+	private void copyDtoToEntity(SchoolDTO dto, School entity) {
 		entity.setName(dto.getName());
-		entity.setPhone(dto.getPhone());
 		
-		entity.getDisciplines().clear();
-		for(DisciplineDTO disciplineDTO : dto.getDisciplines()) {
-			Discipline discipline = disciplineRepository.getReferenceById(disciplineDTO.getId());
-			entity.getDisciplines().add(discipline);
+		entity.getClassRooms().clear();
+		for (ClassRoomDTO classRoomDTO : dto.getClassRooms()) {
+			ClassRoom classRoom = classRoomRepository.getReferenceById(classRoomDTO.getId());
+			entity.getClassRooms().add(classRoom);
 		}
 		
-		entity.getAddresses().clear();
-		for(AddressDTO addressDTO : dto.getAddresses()) {
+		entity.getAddress().clear();
+		for (AddressDTO addressDTO : dto.getAddress()) {
 			Address address = addressRepository.getReferenceById(addressDTO.getId());
-			entity.getAddresses().add(address);
+			entity.getAddress().add(address);
 		}
 	}
-
-
 }

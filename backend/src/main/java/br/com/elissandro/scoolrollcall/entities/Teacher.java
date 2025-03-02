@@ -14,7 +14,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -28,33 +27,30 @@ public class Teacher implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	
-	@OneToOne
-	@JoinColumn(name = "address_id")
-	private Address address;
 	private String phone;
+
+	@ManyToMany
+	@JoinTable(name = "tb_teacher_address", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
+	private Set<Address> addresses = new HashSet<>();
 	
+	@ManyToMany
+	@JoinTable(name = "tb_teacher_discipline", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "discipline_id"))
+	private Set<Discipline> disciplines = new HashSet<>();
+	
+
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant createdAt;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
-	
-	@ManyToMany
-	@JoinTable(name = "tb_teacher_discipline",
-		joinColumns = @JoinColumn(name = "teacher_id"),
-		inverseJoinColumns = @JoinColumn(name = "discipline_id")
-	)
-	private Set<Discipline> disciplines = new HashSet<>();
-	
 
 	
+
 	public Teacher() {
 	}
-	
-	public Teacher(Long id, String name, Address address, String phone) {
+
+	public Teacher(Long id, String name, String phone) {
 		this.id = id;
 		this.name = name;
-		this.address = address;
 		this.phone = phone;
 	}
 
@@ -73,15 +69,7 @@ public class Teacher implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
+	
 	public String getPhone() {
 		return phone;
 	}
@@ -90,24 +78,29 @@ public class Teacher implements Serializable {
 		this.phone = phone;
 	}
 
+	public Set<Address> getAddresses() {
+		return addresses;
+	}
+
 	public Set<Discipline> getDisciplines() {
 		return disciplines;
 	}
+
 	
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
-	
+
 	public Instant getUpdatedAt() {
 		return updatedAt;
 	}
-	
+
 	@PrePersist
 	public void prePersist() {
 		createdAt = Instant.now();
 		updatedAt = Instant.now();
 	}
-	
+
 	@PreUpdate
 	public void preUpdate() {
 		updatedAt = Instant.now();

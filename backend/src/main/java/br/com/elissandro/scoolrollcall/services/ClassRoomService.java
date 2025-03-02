@@ -11,59 +11,60 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.elissandro.scoolrollcall.dto.TutorDTO;
-import br.com.elissandro.scoolrollcall.entities.Address;
-import br.com.elissandro.scoolrollcall.entities.Tutor;
-import br.com.elissandro.scoolrollcall.repositories.AddressRepository;
-import br.com.elissandro.scoolrollcall.repositories.TutorRepository;
+import br.com.elissandro.scoolrollcall.dto.ClassRoomDTO;
+import br.com.elissandro.scoolrollcall.dto.StudentDTO;
+import br.com.elissandro.scoolrollcall.entities.ClassRoom;
+import br.com.elissandro.scoolrollcall.entities.Student;
+import br.com.elissandro.scoolrollcall.repositories.ClassRoomRepository;
+import br.com.elissandro.scoolrollcall.repositories.StudentRepository;
 import br.com.elissandro.scoolrollcall.services.exceptions.DatabaseException;
 import br.com.elissandro.scoolrollcall.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
 
 @Service
-public class TutorService {
+public class ClassRoomService {
 	
 	@Autowired
-	private TutorRepository repository;
+	private ClassRoomRepository repository;
 	
 	@Autowired
-	private AddressRepository addressRepository;
+	private StudentRepository studentRepository;
 
 	@Transactional(readOnly = true)
-	public Page<TutorDTO> findAllPaged(Pageable pageable) {
-		Page<Tutor> list = repository.findAll(pageable);
-		return list.map(x -> new TutorDTO(x, x.getAddresses()));
+	public Page<ClassRoomDTO> findAllPaged(Pageable pageable) {
+		Page<ClassRoom> list = repository.findAll(pageable);
+		return list.map(x -> new ClassRoomDTO(x, x.getStudents()));
 	}
 
 	@Transactional(readOnly = true)
-	public TutorDTO findById(Long id) {
-		Optional<Tutor> obj = repository.findById(id);
-		Tutor entity = obj.orElseThrow( () -> new ResourceNotFoundException("Entity not found"));
-		return new TutorDTO(entity, entity.getAddresses());
+	public ClassRoomDTO findById(Long id) {
+		Optional<ClassRoom> obj = repository.findById(id);
+		ClassRoom entity = obj.orElseThrow( () -> new ResourceNotFoundException("Entity not found"));
+		return new ClassRoomDTO(entity, entity.getStudents());
 	}
 
 	@Transactional
-	public TutorDTO insert(TutorDTO dto) {
-		Tutor entity = new Tutor();
-		entity.setName(dto.getName());
+	public ClassRoomDTO insert(ClassRoomDTO dto) {
+		ClassRoom entity = new ClassRoom();
+		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
-		return new TutorDTO(entity, entity.getAddresses());
+		return new ClassRoomDTO(entity, entity.getStudents());
 	}
 
+	
 	@Transactional
-	public TutorDTO update(Long id, TutorDTO dto) {
+	public ClassRoomDTO update(Long id, ClassRoomDTO dto) {
 		try {
-			Tutor entity = repository.getReferenceById(id);
+			ClassRoom entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
-			return new TutorDTO(entity, entity.getAddresses());
+			return new ClassRoomDTO(entity, entity.getStudents());
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
 	}
 	
-
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public void delete(Long id) {
 		try {
@@ -78,14 +79,16 @@ public class TutorService {
 		}
 	}
 	
-	private void copyDtoToEntity(TutorDTO dto, Tutor entity) {
+	private void copyDtoToEntity(ClassRoomDTO dto, ClassRoom entity) {
 		entity.setName(dto.getName());
-		dto.getAddresses().forEach(addressDto -> {
-			Address address = addressRepository.getReferenceById(addressDto.getId());
-			entity.getAddresses().add(address);
-		});
+		
+		
+		entity.getStudents().clear();
+		for (StudentDTO studentDTO : dto.getStudents()) {
+			Student student = studentRepository.getReferenceById(studentDTO.getId());
+			entity.getStudents().add(student);
+		}
 		
 	}
-
 
 }

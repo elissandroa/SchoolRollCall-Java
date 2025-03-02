@@ -2,9 +2,7 @@ package br.com.elissandro.scoolrollcall.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,7 +14,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -25,45 +22,43 @@ import jakarta.persistence.Table;
 @Table(name = "tb_student")
 public class Student implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	@Id	
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	
+
 	@ManyToMany
-	@JoinTable(name = "tb_student_tutor",
-		joinColumns = @JoinColumn(name = "student_id"),
-		inverseJoinColumns = @JoinColumn(name = "tutor_id"))
+	@JoinTable(name = "tb_student_tutor", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "tutor_id"))
 	private Set<Tutor> tutors = new HashSet<>();
+
+	@ManyToMany
+	@JoinTable(name = "tb_student_school_test", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "school_test_id"))
+	private Set<SchoolTest> schoolTests = new HashSet<>();
+
+	@ManyToMany
+	@JoinTable(name = "tb_student_instrument", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "instrument_id"))
+	private Set<Instrument> instruments = new HashSet<>();
+
+	@ManyToMany
+	@JoinTable(name = "tb_student_address", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
+	private Set<Address> addresses = new HashSet<>();
 	
 	@ManyToMany
-	@JoinTable(name = "tb_student_school_test",
-		joinColumns = @JoinColumn(name = "student_id"),
-		inverseJoinColumns = @JoinColumn(name = "school_test_id"))
-	private List<SchoolTest> schoolTests = new ArrayList<>();
-	
-	@OneToOne
-	@JoinColumn(name = "instrument_id")
-	private Instrument instrument;
-	
-	@OneToOne
-	@JoinColumn(name = "address_id")
-	private Address address;
-	
+	@JoinTable(name = "tb_student_graduation", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "graduation_id"))
+	private Set<Graduation> graduations = new HashSet<>();
+
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant createdAt;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
-	
+
 	public Student() {
 	}
-	
-	public Student(Long id, String name, Instrument instrument, Address address) {
+
+	public Student(Long id, String name) {
 		this.id = id;
 		this.name = name;
-		this.instrument = instrument;
-		this.address = address;
 	}
 
 	public Long getId() {
@@ -82,44 +77,40 @@ public class Student implements Serializable {
 		this.name = name;
 	}
 
-	public Instrument getInstrument() {
-		return instrument;
-	}
-
-	public void setInstrument(Instrument instrument) {
-		this.instrument = instrument;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-	
 	public Set<Tutor> getTutors() {
 		return tutors;
 	}
 	
-	public List<SchoolTest> getSchoolTests() {
+	public Set<SchoolTest> getSchoolTests() {
 		return schoolTests;
 	}
 
+	public Set<Instrument> getInstruments() {
+		return instruments;
+	}
+	
+	public Set<Address> getAddresses() {
+		return addresses;
+	}
+	
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
-	
+
 	public Instant getUpdatedAt() {
 		return updatedAt;
 	}
 	
+	public Set<Graduation> getGraduations() {
+		return graduations;
+	}
+
 	@PrePersist
 	public void prePersist() {
 		createdAt = Instant.now();
 		updatedAt = Instant.now();
 	}
-	
+
 	@PreUpdate
 	public void preUpdate() {
 		updatedAt = Instant.now();
@@ -129,7 +120,6 @@ public class Student implements Serializable {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-	
 
 	@Override
 	public boolean equals(Object obj) {

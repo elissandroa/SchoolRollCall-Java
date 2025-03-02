@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import br.com.elissandro.scoolrollcall.entities.Address;
 import br.com.elissandro.scoolrollcall.entities.ClassRoom;
 import br.com.elissandro.scoolrollcall.entities.School;
 
@@ -13,9 +14,9 @@ public class SchoolDTO implements Serializable {
 	
 	private Long id;
 	private String name;
-	private Long addressId;
 
-	private List<ClassRoom> classrooms = new ArrayList<>();
+	private List<ClassRoomDTO> classRooms = new ArrayList<>();
+	private List<AddressDTO> address = new ArrayList<>();
 	
 	public SchoolDTO() {
 	}
@@ -23,18 +24,17 @@ public class SchoolDTO implements Serializable {
 	public SchoolDTO(Long id, String name, Long addressId) {
 		this.id = id;
 		this.name = name;
-		this.addressId = addressId;
 	}
 	
 	public SchoolDTO(School entity) {
 		id = entity.getId();
 		name = entity.getName();
-		addressId = entity.getAddress().getId();
 	}
 	
-	public SchoolDTO(School entity, Set<ClassRoom> classrooms) {
+	public SchoolDTO(School entity, Set<ClassRoom> classRooms, Set<Address> address) {
 		this(entity);
-		classrooms.forEach(classroom -> this.classrooms.add(classroom));
+		classRooms.forEach(classroom -> this.classRooms.add(new ClassRoomDTO(classroom)));
+		address.forEach(addr -> this.address.add(new AddressDTO(addr)));
 	}
 
 	public Long getId() {
@@ -53,16 +53,11 @@ public class SchoolDTO implements Serializable {
 		this.name = name;
 	}
 
-	public Long getAddressId() {
-		return addressId;
+	public List<ClassRoomDTO> getClassRooms() {
+		return classRooms;
 	}
-
-	public void setAddressId(Long addressId) {
-		this.addressId = addressId;
+	
+	public List<AddressDTO> getAddress() {
+		return address;
 	}
-
-	public List<ClassRoom> getClassrooms() {
-		return classrooms;
-	}
-
 }

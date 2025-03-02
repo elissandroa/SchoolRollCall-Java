@@ -1,8 +1,12 @@
 package br.com.elissandro.scoolrollcall.dto;
 
+import java.io.Serializable;
+
 import br.com.elissandro.scoolrollcall.entities.SchoolTest;
 
-public class SchoolTestDTO {
+public class SchoolTestDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private String name;
 	private String description;

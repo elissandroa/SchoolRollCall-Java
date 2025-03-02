@@ -16,30 +16,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.elissandro.scoolrollcall.dto.DisciplineDTO;
-import br.com.elissandro.scoolrollcall.services.DisciplineService;
+import br.com.elissandro.scoolrollcall.dto.SchoolDTO;
+import br.com.elissandro.scoolrollcall.services.SchoolService;
 
 @RestController
-@RequestMapping(value = "/disciplines")
-public class DisciplineResource {
+@RequestMapping(value = "/schools")
+public class SchoolResource {
 	
 	@Autowired
-	private DisciplineService service;
+	private SchoolService service;
 
 	@GetMapping
-	public ResponseEntity<Page<DisciplineDTO>> findAll(Pageable pageable) {
-		Page<DisciplineDTO> list = service.findAllPaged(pageable);
+	public ResponseEntity<Page<SchoolDTO>> findAll(Pageable pageable) {
+		Page<SchoolDTO> list = service.findAllPaged(pageable);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<DisciplineDTO> findById(@PathVariable Long id) {
-		DisciplineDTO dto = service.findById(id);
+	public ResponseEntity<SchoolDTO> findById(@PathVariable Long id) {
+		SchoolDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 	
 	@PostMapping
-	public ResponseEntity<DisciplineDTO> insert(@RequestBody DisciplineDTO dto) {
+	public ResponseEntity<SchoolDTO> insert(@RequestBody SchoolDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();
@@ -47,7 +47,7 @@ public class DisciplineResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<DisciplineDTO> update(@PathVariable Long id, @RequestBody DisciplineDTO dto) {
+	public ResponseEntity<SchoolDTO> update(@PathVariable Long id, @RequestBody SchoolDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}
