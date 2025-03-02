@@ -38,16 +38,16 @@ public class Student implements Serializable {
 	private Set<SchoolTest> schoolTests = new HashSet<>();
 
 	@ManyToMany
-	@JoinTable(name = "tb_student_instrument", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "instrument_id"))
-	private Set<Instrument> instruments = new HashSet<>();
-
-	@ManyToMany
 	@JoinTable(name = "tb_student_address", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
 	private Set<Address> addresses = new HashSet<>();
 	
-	@ManyToMany
-	@JoinTable(name = "tb_student_graduation", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "graduation_id"))
-	private Set<Graduation> graduations = new HashSet<>();
+	@ManyToOne
+	@JoinColumn(name = "instrument_id")
+	private Instrument instrument;
+	
+	@ManyToOne
+	@JoinColumn(name = "graduation_id")
+	private Graduation graduation;
 
 	@ManyToOne
 	@JoinColumn(name = "class_room_id")
@@ -61,9 +61,12 @@ public class Student implements Serializable {
 	public Student() {
 	}
 
-	public Student(Long id, String name) {
+	public Student(Long id, String name, Graduation graduation, ClassRoom classRoom, Instrument instrument) {
 		this.id = id;
 		this.name = name;
+		this.graduation = graduation;
+		this.classRoom = classRoom;
+		this.instrument = instrument;
 	}
 
 	public Long getId() {
@@ -90,8 +93,12 @@ public class Student implements Serializable {
 		return schoolTests;
 	}
 
-	public Set<Instrument> getInstruments() {
-		return instruments;
+	public Instrument getInstrument() {
+		return instrument;
+	}
+	
+	public void setInstrument(Instrument instrument) {
+		this.instrument = instrument;
 	}
 	
 	public Set<Address> getAddresses() {
@@ -106,10 +113,14 @@ public class Student implements Serializable {
 		return updatedAt;
 	}
 	
-	public Set<Graduation> getGraduations() {
-		return graduations;
+	public Graduation getGraduation() {
+		return graduation;
 	}
 	
+	public void setGraduation(Graduation graduation) {
+		this.graduation = graduation;
+	}
+
 	public ClassRoom getClassRoom() {
 		return classRoom;
 	}

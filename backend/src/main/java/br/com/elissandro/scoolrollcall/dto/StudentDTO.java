@@ -6,50 +6,49 @@ import java.util.List;
 import java.util.Set;
 
 import br.com.elissandro.scoolrollcall.entities.Address;
-import br.com.elissandro.scoolrollcall.entities.Graduation;
-import br.com.elissandro.scoolrollcall.entities.Instrument;
 import br.com.elissandro.scoolrollcall.entities.SchoolTest;
 import br.com.elissandro.scoolrollcall.entities.Student;
 import br.com.elissandro.scoolrollcall.entities.Tutor;
 
 public class StudentDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long id;
 	private String name;
 
 	private List<TutorDTO> tutors = new ArrayList<>();
 	private List<SchoolTestDTO> schoolTests = new ArrayList<>();
-	private List<InstrumentDTO> instruments = new ArrayList<>();
 	private List<AddressDTO> addresses = new ArrayList<>();
-	private List<GraduationDTO> graduations = new ArrayList<>();
-	
+
+	private GraduationDTO graduation;
 	private ClassRoomDTO classRoom;
-	
+	private InstrumentDTO instrument;
+
 	public StudentDTO() {
 	}
-	
-	public StudentDTO(Long id, String name, Long instrumentId, Long addressId, ClassRoomDTO classRoom) {
+
+	public StudentDTO(Long id, String name, Long instrumentId, Long addressId, ClassRoomDTO classRoom,
+			GraduationDTO graduation, InstrumentDTO instrument) {
 		this.id = id;
 		this.name = name;
 		this.classRoom = classRoom;
+		this.graduation = graduation;
+		this.instrument = instrument;
 	}
-	
+
 	public StudentDTO(Student entity) {
 		id = entity.getId();
 		name = entity.getName();
+		graduation = new GraduationDTO(entity.getGraduation());
 		classRoom = new ClassRoomDTO(entity.getClassRoom());
+		instrument = new InstrumentDTO(entity.getInstrument());
 	}
-	
-	public StudentDTO(Student entity, Set<Tutor> tutors, 
-			Set<SchoolTest> schoolTests, Set<Instrument> instruments,
-			Set<Address> addresses, Set<Graduation> graduations) {	
+
+	public StudentDTO(Student entity, Set<Tutor> tutors, Set<SchoolTest> schoolTests, Set<Address> addresses) {
 		this(entity);
 		tutors.forEach(tutor -> this.tutors.add(new TutorDTO(tutor)));
 		schoolTests.forEach(test -> this.schoolTests.add(new SchoolTestDTO(test)));
-		instruments.forEach(instrument -> this.instruments.add(new InstrumentDTO(instrument)));
 		addresses.forEach(address -> this.addresses.add(new AddressDTO(address)));
-		graduations.forEach(graduation -> this.graduations.add(new GraduationDTO(graduation)));
 	}
 
 	public Long getId() {
@@ -75,25 +74,25 @@ public class StudentDTO implements Serializable {
 	public List<SchoolTestDTO> getSchoolTests() {
 		return schoolTests;
 	}
-	
-	public List<InstrumentDTO> getInstruments() {
-		return instruments;
+
+	public InstrumentDTO getInstrument() {
+		return instrument;
 	}
-	
+
+	public void setInstrument(InstrumentDTO instrument) {
+		this.instrument = instrument;
+	}
+
 	public List<AddressDTO> getAddresses() {
 		return addresses;
 	}
-	
-	public List<GraduationDTO> getGraduations() {
-		return graduations;
+
+	public GraduationDTO getGraduation() {
+		return graduation;
 	}
-	
+
 	public ClassRoomDTO getClassRoom() {
 		return classRoom;
-	}
-	
-	public void setClassRoom(ClassRoomDTO classRoom) {
-		this.classRoom = classRoom;
 	}
 
 }

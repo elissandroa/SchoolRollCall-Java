@@ -49,26 +49,26 @@ INSERT INTO tb_classroom (name, created_at) VALUES ('Turma 3 2025', NOW());
 
 INSERT INTO tb_school(name,  created_at) VALUES ('Colégio Social Madre Clélia',  NOW());
 
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 1', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 2', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 3', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 4', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 5', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 6', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 7', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 8', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 9', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 10', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 11', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 12', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 13', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 14', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 15', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 16', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 17', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 18', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 19', 1, NOW());
-INSERT INTO tb_student(name, class_room_id, created_at) VALUES ('Student 20', 1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 1', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 2', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 3', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 4', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 5', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 6', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 7', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 8', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 9', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 10', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 11', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 12', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 13', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 14', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 15', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 16', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 17', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 18', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 19', 1,1,1, NOW());
+INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 20', 1,1,1, NOW());
 
 
 
