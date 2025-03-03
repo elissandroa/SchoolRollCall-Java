@@ -83,4 +83,5 @@ public class SchoolRollCallDTO implements Serializable{
 	public void setStudent(StudentDTO student) {
 		this.student = student;
 	}
+
 }

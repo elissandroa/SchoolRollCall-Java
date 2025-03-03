@@ -80,6 +80,8 @@ public class TutorService {
 	
 	private void copyDtoToEntity(TutorDTO dto, Tutor entity) {
 		entity.setName(dto.getName());
+		entity.setEmail(dto.getEmail());
+		entity.setPhone(dto.getPhone());
 		dto.getAddresses().forEach(addressDto -> {
 			Address address = addressRepository.getReferenceById(addressDto.getId());
 			entity.getAddresses().add(address);

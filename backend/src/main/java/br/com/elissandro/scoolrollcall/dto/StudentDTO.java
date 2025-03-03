@@ -15,6 +15,8 @@ public class StudentDTO implements Serializable {
 
 	private Long id;
 	private String name;
+	private String email;
+	private String phone;
 
 	private List<TutorDTO> tutors = new ArrayList<>();
 	private List<SchoolTestDTO> schoolTests = new ArrayList<>();
@@ -28,12 +30,14 @@ public class StudentDTO implements Serializable {
 	}
 
 	public StudentDTO(Long id, String name, Long instrumentId, Long addressId, ClassRoomDTO classRoom,
-			GraduationDTO graduation, InstrumentDTO instrument) {
+			GraduationDTO graduation, InstrumentDTO instrument, String email, String phone) {
 		this.id = id;
 		this.name = name;
 		this.classRoom = classRoom;
 		this.graduation = graduation;
 		this.instrument = instrument;
+		this.email = email;
+		this.phone = phone;
 	}
 
 	public StudentDTO(Student entity) {
@@ -42,6 +46,8 @@ public class StudentDTO implements Serializable {
 		graduation = new GraduationDTO(entity.getGraduation());
 		classRoom = new ClassRoomDTO(entity.getClassRoom());
 		instrument = new InstrumentDTO(entity.getInstrument());
+		email = entity.getEmail();
+		phone = entity.getPhone();
 	}
 
 	public StudentDTO(Student entity, Set<Tutor> tutors, Set<SchoolTest> schoolTests, Set<Address> addresses) {
@@ -94,5 +100,21 @@ public class StudentDTO implements Serializable {
 	public ClassRoomDTO getClassRoom() {
 		return classRoom;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}	
 
 }

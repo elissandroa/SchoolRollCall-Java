@@ -13,6 +13,8 @@ public class TutorDTO implements Serializable {
 	
 	private Long id;
 	private String name;
+	private String email;
+	private String phone;
 	
 	private List<AddressDTO> addresses = new ArrayList<>();
 
@@ -27,6 +29,8 @@ public class TutorDTO implements Serializable {
 	public TutorDTO(Tutor entity) {
 		id = entity.getId();
 		name = entity.getName();
+		email = entity.getEmail();
+		phone = entity.getPhone();
 	}
 	
 	public TutorDTO(Tutor entity, Set<Address> addresses) {
@@ -45,4 +49,20 @@ public class TutorDTO implements Serializable {
 	public List<AddressDTO> getAddresses() {
 		return addresses;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}	
 }

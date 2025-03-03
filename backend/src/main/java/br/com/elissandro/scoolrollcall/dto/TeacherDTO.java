@@ -15,6 +15,7 @@ public class TeacherDTO implements Serializable {
 	private Long id;
 	private String name;
 	private String phone;
+	private String email;
 	
 	private List<DisciplineDTO> disciplines = new ArrayList<>();
 	private List<AddressDTO> addresses = new ArrayList<>();
@@ -23,16 +24,18 @@ public class TeacherDTO implements Serializable {
 	public TeacherDTO() {
 	}
 	
-	public TeacherDTO(Long id, String name, String phone) {
+	public TeacherDTO(Long id, String name, String phone, String email) {
 		this.id = id;
 		this.name = name;
 		this.phone = phone;
+		this.email = email;
 	}
 	
 	public TeacherDTO(Teacher entity) {
 		id = entity.getId();
 		name = entity.getName();
 		phone = entity.getPhone();
+		email = entity.getEmail();
 	}
 	
 	public TeacherDTO(Teacher entity, Set<Discipline> disciplines, Set<Address> addresses) {
@@ -68,5 +71,13 @@ public class TeacherDTO implements Serializable {
 	
 	public String getPhone() {
 		return phone;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }

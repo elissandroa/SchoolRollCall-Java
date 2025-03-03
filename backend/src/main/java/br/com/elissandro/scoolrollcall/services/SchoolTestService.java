@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.elissandro.scoolrollcall.dto.SchoolTestDTO;
+import br.com.elissandro.scoolrollcall.entities.Discipline;
 import br.com.elissandro.scoolrollcall.entities.SchoolTest;
+import br.com.elissandro.scoolrollcall.repositories.DisciplineRepository;
 import br.com.elissandro.scoolrollcall.repositories.SchoolTestRepository;
 import br.com.elissandro.scoolrollcall.services.exceptions.DatabaseException;
 import br.com.elissandro.scoolrollcall.services.exceptions.ResourceNotFoundException;
@@ -24,6 +26,9 @@ public class SchoolTestService {
 	
 	@Autowired
 	private SchoolTestRepository repository;
+	
+	@Autowired
+	private DisciplineRepository disciplineRepository;
 
 	@Transactional(readOnly = true)
 	public Page<SchoolTestDTO> findAllPaged(Pageable pageable) {
@@ -41,9 +46,7 @@ public class SchoolTestService {
 	@Transactional
 	public SchoolTestDTO insert(SchoolTestDTO dto) {
 		SchoolTest entity = new SchoolTest();
-		entity.setName(dto.getName());
-		entity.setDescription(dto.getDescription());
-		entity.setGrade(dto.getGrade());
+		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new SchoolTestDTO(entity);
 	}
@@ -52,9 +55,7 @@ public class SchoolTestService {
 	public SchoolTestDTO update(Long id, SchoolTestDTO dto) {
 		try {
 			SchoolTest entity = repository.getReferenceById(id);
-			entity.setName(dto.getName());
-			entity.setDescription(dto.getDescription());
-			entity.setGrade(dto.getGrade());
+			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
 			return new SchoolTestDTO(entity);
 		} catch (EntityNotFoundException e) {
@@ -75,5 +76,12 @@ public class SchoolTestService {
 			throw new DatabaseException("Integrity violation");
 		}
 	}
-
+	
+	private void copyDtoToEntity(SchoolTestDTO dto, SchoolTest entity) {
+		entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setGrade(dto.getGrade());
+		Discipline discipline = disciplineRepository.getReferenceById(dto.getDisciplineId());
+		entity.setDiscipline(discipline);
+	}
 }

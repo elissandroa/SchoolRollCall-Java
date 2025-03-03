@@ -95,7 +95,7 @@ public class SchoolRollCall implements Serializable {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-	
+
 	@PrePersist
 	public void prePersist() {
 		createdAt = Instant.now();

@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -26,6 +28,10 @@ public class SchoolTest implements Serializable {
 	private String name;
 	private String description;
 	private Double grade;
+	
+	@ManyToOne
+	@JoinColumn(name = "discipline_id")
+	private Discipline discipline;
 
 	private Instant createdAt;
 	private Instant updatedAt;
@@ -33,12 +39,12 @@ public class SchoolTest implements Serializable {
 	public SchoolTest() {
 	}
 	
-	public SchoolTest(Long id, String name, String description, Double grade) {
+	public SchoolTest(Long id, String name, String description, Double grade, Discipline discipline) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.grade = grade;
-		
+		this.discipline = discipline;
 	}
 
 	public Long getId() {
@@ -80,6 +86,14 @@ public class SchoolTest implements Serializable {
 	
 	public Instant getUpdatedAt() {
 		return updatedAt;
+	}
+	
+	public Discipline getDiscipline() {
+		return discipline;
+	}
+	
+	public void setDiscipline(Discipline discipline) {
+		this.discipline = discipline;
 	}
 	
 	@PrePersist

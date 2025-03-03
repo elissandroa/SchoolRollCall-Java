@@ -88,7 +88,7 @@ public class SchoolService {
 
 	private void copyDtoToEntity(SchoolDTO dto, School entity) {
 		entity.setName(dto.getName());
-		
+		entity.setPhone(dto.getPhone());
 		entity.getClassRooms().clear();
 		for (ClassRoomDTO classRoomDTO : dto.getClassRooms()) {
 			ClassRoom classRoom = classRoomRepository.getReferenceById(classRoomDTO.getId());

@@ -87,7 +87,7 @@ public class TeacherService {
 	private void copyDtoToEntity(TeacherDTO dto, Teacher entity) {
 		entity.setName(dto.getName());
 		entity.setPhone(dto.getPhone());
-		
+		entity.setEmail(dto.getEmail());
 		entity.getDisciplines().clear();
 		for(DisciplineDTO disciplineDTO : dto.getDisciplines()) {
 			Discipline discipline = disciplineRepository.getReferenceById(disciplineDTO.getId());

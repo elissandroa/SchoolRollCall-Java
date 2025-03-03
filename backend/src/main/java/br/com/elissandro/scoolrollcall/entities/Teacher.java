@@ -28,6 +28,7 @@ public class Teacher implements Serializable {
 	private Long id;
 	private String name;
 	private String phone;
+	private String email;
 
 	@ManyToMany
 	@JoinTable(name = "tb_teacher_address", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
@@ -48,10 +49,11 @@ public class Teacher implements Serializable {
 	public Teacher() {
 	}
 
-	public Teacher(Long id, String name, String phone) {
+	public Teacher(Long id, String name, String phone, String email) {
 		this.id = id;
 		this.name = name;
 		this.phone = phone;
+		this.email = email;
 	}
 
 	public Long getId() {
@@ -94,6 +96,14 @@ public class Teacher implements Serializable {
 	public Instant getUpdatedAt() {
 		return updatedAt;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}	
 
 	@PrePersist
 	public void prePersist() {

@@ -104,6 +104,8 @@ public class StudentService {
 	
 	private void copyDtoToEntity(StudentDTO dto, Student entity) {
 		entity.setName(dto.getName());
+		entity.setEmail(dto.getEmail());
+		entity.setPhone(dto.getPhone());
 		dto.getAddresses().forEach(addressDto -> {
 			Address address = addressRepository.getReferenceById(addressDto.getId());
 			entity.getAddresses().add(address);

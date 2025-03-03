@@ -28,6 +28,8 @@ public class Student implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private String email;
+	private String phone;
 
 	@ManyToMany
 	@JoinTable(name = "tb_student_tutor", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "tutor_id"))
@@ -61,12 +63,14 @@ public class Student implements Serializable {
 	public Student() {
 	}
 
-	public Student(Long id, String name, Graduation graduation, ClassRoom classRoom, Instrument instrument) {
+	public Student(Long id, String name, Graduation graduation, ClassRoom classRoom, Instrument instrument, String email, String phone) {
 		this.id = id;
 		this.name = name;
 		this.graduation = graduation;
 		this.classRoom = classRoom;
 		this.instrument = instrument;
+		this.email = email;
+		this.phone = phone;
 	}
 
 	public Long getId() {
@@ -127,6 +131,22 @@ public class Student implements Serializable {
 	
 	public void setClassRoom(ClassRoom classRoom) {
 		this.classRoom = classRoom;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	@PrePersist

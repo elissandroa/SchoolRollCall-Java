@@ -11,15 +11,19 @@ public class SchoolTestDTO implements Serializable {
 	private String name;
 	private String description;
 	private Double grade;
+	private Long disciplineId;
+	
+	private DisciplineDTO discipline;
 	
 	public SchoolTestDTO() {
 	}
 	
-	public SchoolTestDTO(Long id, String name, String description, Double grade) {
+	public SchoolTestDTO(Long id, String name, String description, Double grade, Long disciplineId) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.grade = grade;
+		this.disciplineId = disciplineId;
 	}
 	
 	public SchoolTestDTO(SchoolTest entity) {
@@ -27,6 +31,7 @@ public class SchoolTestDTO implements Serializable {
 		name = entity.getName();
 		description = entity.getDescription();
 		grade = entity.getGrade();
+		discipline = new DisciplineDTO(entity.getDiscipline());
 	}
 
 	public Long getId() {
@@ -59,6 +64,22 @@ public class SchoolTestDTO implements Serializable {
 
 	public void setGrade(Double grade) {
 		this.grade = grade;
+	}
+	
+	public DisciplineDTO getDiscipline() {
+		return discipline;
+	}
+	
+	public void setDiscipline(DisciplineDTO discipline) {
+		this.discipline = discipline;
+	}
+	
+	public Long getDisciplineId() {
+		return disciplineId;
+	}
+	
+	public void setDisciplineId(Long disciplineId) {
+		this.disciplineId = disciplineId;
 	}
 
 }

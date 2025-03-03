@@ -26,6 +26,8 @@ import jakarta.persistence.Table;
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private String email;
+	private String phone;
 	
 	@ManyToMany
 	@JoinTable(name = "tb_tutor_address",
@@ -41,9 +43,11 @@ import jakarta.persistence.Table;
 	public Tutor() {
 	}
 	
-	public Tutor(Long id, String name) {
+	public Tutor(Long id, String name, String email, String phone) {
 		this.id = id;
 		this.name = name;
+		this.email = email;
+		this.phone = phone;
 	}
 
 	public Long getId() {
@@ -61,6 +65,16 @@ import jakarta.persistence.Table;
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	
 	
 	@PrePersist
 	public void prePersist() {
@@ -83,6 +97,22 @@ import jakarta.persistence.Table;
 	
 	public Set<Address> getAddresses() {
 		return addresses;
+	}
+	
+	public void addAddress(Address address) {
+		addresses.add(address);
+	}
+	
+	public void removeAddress(Address address) {
+		addresses.remove(address);
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

@@ -19,10 +19,15 @@ INSERT INTO tb_tutor (name, created_at) VALUES ('Jane Doe', NOW());
 INSERT INTO tb_tutor (name, created_at) VALUES ('John Doe', NOW());
 INSERT INTO tb_tutor (name, created_at) VALUES ('Mary Doe', NOW());
 
-INSERT INTO tb_school_test (name, description, grade, created_at) VALUES ('School Test 1', 'School Test 1 Description', 10, NOW());
-INSERT INTO tb_school_test (name, description, grade, created_at) VALUES ('School Test 2', 'School Test 2 Description', 9, NOW());
-INSERT INTO tb_school_test (name, description, grade, created_at) VALUES ('School Test 3', 'School Test 3 Description', 8, NOW());
-INSERT INTO tb_school_test (name, description, grade, created_at) VALUES ('School Test 4', 'School Test 4 Description', 7, NOW());
+INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 1', NOW());
+INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 2', NOW());
+INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 3', NOW());
+INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 4', NOW());
+
+INSERT INTO tb_school_test (name, description, discipline_id, grade, created_at) VALUES ('School Test 1', 'School Test 1 Description',1, 10, NOW());
+INSERT INTO tb_school_test (name, description, discipline_id, grade, created_at) VALUES ('School Test 2', 'School Test 2 Description',2, 9, NOW());
+INSERT INTO tb_school_test (name, description, discipline_id, grade, created_at) VALUES ('School Test 3', 'School Test 3 Description',3, 8, NOW());
+INSERT INTO tb_school_test (name, description, discipline_id, grade, created_at) VALUES ('School Test 4', 'School Test 4 Description',4, 7, NOW());
 
 INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, created_at) VALUES ('Street 1', '123', 'City 1','Bairro 1','State 1','808828', NOW());
 INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, created_at) VALUES ('Street 2', '456', 'City 2','Bairro 2','State 2','808828', NOW());
@@ -30,12 +35,6 @@ INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, creat
 INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, created_at) VALUES ('Street 4', '1011', 'City 4','Bairro 4','State 4','808828', NOW());
 INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, created_at) VALUES ('Street 5', '1213', 'City 5','Bairro 5','State 5','808828', NOW());
 INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, created_at) VALUES ('Street 6', '1415', 'City 6','Bairro 6','State 6','808828', NOW());
-
-INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 1', NOW());
-INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 2', NOW());
-INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 3', NOW());
-INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 4', NOW());
-
 
 INSERT INTO tb_teacher (name, phone, created_at) VALUES ('Teacher 1', '99999999', NOW());
 INSERT INTO tb_teacher (name, phone, created_at) VALUES ('Teacher 2', '88888888', NOW());

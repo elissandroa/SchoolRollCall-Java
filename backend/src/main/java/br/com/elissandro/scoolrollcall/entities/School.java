@@ -27,6 +27,7 @@ public class School implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private String phone;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant created_at;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
@@ -43,9 +44,10 @@ public class School implements Serializable {
 	public School() {
 	}
 
-	public School(Long id, String name) {
+	public School(Long id, String name, String phone) {
 		this.id = id;
 		this.name = name;
+		this.phone = phone;
 	}
 
 	public Long getId() {
@@ -78,6 +80,14 @@ public class School implements Serializable {
 
 	public Instant getUpdated_at() {
 		return updated_at;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	@PrePersist

@@ -14,6 +14,7 @@ public class SchoolDTO implements Serializable {
 	
 	private Long id;
 	private String name;
+	private String phone;
 
 	private List<ClassRoomDTO> classRooms = new ArrayList<>();
 	private List<AddressDTO> address = new ArrayList<>();
@@ -21,14 +22,16 @@ public class SchoolDTO implements Serializable {
 	public SchoolDTO() {
 	}
 	
-	public SchoolDTO(Long id, String name, Long addressId) {
+	public SchoolDTO(Long id, String name, Long addressId, String phone) {
 		this.id = id;
 		this.name = name;
+		this.phone = phone;
 	}
 	
 	public SchoolDTO(School entity) {
 		id = entity.getId();
 		name = entity.getName();
+		phone = entity.getPhone();
 	}
 	
 	public SchoolDTO(School entity, Set<ClassRoom> classRooms, Set<Address> address) {
@@ -59,5 +62,13 @@ public class SchoolDTO implements Serializable {
 	
 	public List<AddressDTO> getAddress() {
 		return address;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }
