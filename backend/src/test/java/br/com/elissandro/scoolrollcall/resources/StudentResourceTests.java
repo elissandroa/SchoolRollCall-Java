@@ -26,35 +26,35 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.elissandro.scoolrollcall.Resources.AddressResource;
-import br.com.elissandro.scoolrollcall.dto.AddressDTO;
-import br.com.elissandro.scoolrollcall.services.AddressService;
+import br.com.elissandro.scoolrollcall.Resources.StudentResource;
+import br.com.elissandro.scoolrollcall.dto.StudentDTO;
+import br.com.elissandro.scoolrollcall.services.StudentService;
 import br.com.elissandro.scoolrollcall.services.exceptions.DatabaseException;
 import br.com.elissandro.scoolrollcall.services.exceptions.ResourceNotFoundException;
 import br.com.elissandro.scoolrollcall.tests.Factory;
 
-@WebMvcTest(AddressResource.class)
-public class AddressResourceTests {
+@WebMvcTest(StudentResource.class)
+public class StudentResourceTests {
 
 	@Autowired
 	private MockMvc mockMvc;
 
 	@MockBean
-	private AddressService service;
+	private StudentService service;
 	
 	@Autowired
 	private ObjectMapper objectMapper;
 	
-	private AddressDTO addressDTO;
-	private PageImpl<AddressDTO> page;
+	private StudentDTO studentDTO;
+	private PageImpl<StudentDTO> page;
 	private long existingId;
 	private long nonExistingId;
 	private long dependentId;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		addressDTO = Factory.createAddressDTO();
-		page = new PageImpl<>(List.of(addressDTO));
+		studentDTO = Factory.createStudentDTO();
+		page = new PageImpl<>(List.of(studentDTO));
 		existingId = 1L;
 		nonExistingId = 2L;
 		dependentId = 3L;
@@ -62,62 +62,62 @@ public class AddressResourceTests {
 		when(service.findAllPaged(any())).thenReturn(page);
 		
 		
-		when(service.findById(existingId)).thenReturn(addressDTO);
+		when(service.findById(existingId)).thenReturn(studentDTO);
 		when(service.findById(nonExistingId)).thenThrow(ResourceNotFoundException.class);
 		
-		when(service.insert(any())).thenReturn(addressDTO);
+		when(service.insert(any())).thenReturn(studentDTO);
 		
-		when(service.update(eq(existingId), any())).thenReturn(addressDTO);
+		when(service.update(eq(existingId), any())).thenReturn(studentDTO);
 		when(service.update(eq(nonExistingId), any())).thenThrow(ResourceNotFoundException.class);
 		
 		doNothing().when(service).delete(existingId);
 		doThrow(ResourceNotFoundException.class).when(service).delete(nonExistingId);
 		doThrow(DatabaseException.class).when(service).delete(dependentId);
 		
-		when(service.insert(any())).thenReturn(addressDTO);
+		when(service.insert(any())).thenReturn(studentDTO);
 
 	}
 	
 	@Test
 	public void findAllShouldReturnPage() throws Exception {
-		ResultActions result = mockMvc.perform(get("/addresses")
+		ResultActions result = mockMvc.perform(get("/students")
 				.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isOk());
 	}
 	
 	@Test
-	public void findByIdShouldReturnAddressWhenIdExists() throws Exception {
-		ResultActions result = mockMvc.perform(get("/addresses/{id}", existingId)
+	public void findByIdShouldReturnStudentWhenIdExists() throws Exception {
+		ResultActions result = mockMvc.perform(get("/students/{id}", existingId)
 				.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isOk());
-		result.andExpect(jsonPath("$.street").exists());
+		result.andExpect(jsonPath("$.name").exists());
 	}
 	
 	@Test
 	public void findByIdShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
-		ResultActions result = mockMvc.perform(get("/addresses/{nonExistingId}", nonExistingId)
+		ResultActions result = mockMvc.perform(get("/students/{nonExistingId}", nonExistingId)
 				.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isNotFound());
 	}
 	
 	@Test
-	public void insertShouldReturnAddressDTOCreated() throws Exception {
-		ResultActions result = mockMvc.perform(post("/addresses")
-				.content(objectMapper.writeValueAsString(addressDTO))
+	public void insertShouldReturnStudentDTOCreated() throws Exception {
+		ResultActions result = mockMvc.perform(post("/students")
+				.content(objectMapper.writeValueAsString(studentDTO))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isCreated());
-		result.andExpect(jsonPath("$.street").exists());
+		result.andExpect(jsonPath("$.name").exists());
 	}
 	
 	@Test
-	public void updateShouldReturnAddressDTOWhenIdExists() throws Exception {
-		ResultActions result = mockMvc.perform(put("/addresses/{id}", existingId)
-				.content(objectMapper.writeValueAsString(addressDTO))
+	public void updateShouldReturnStudentDTOWhenIdExists() throws Exception {
+		ResultActions result = mockMvc.perform(put("/students/{id}", existingId)
+				.content(objectMapper.writeValueAsString(studentDTO))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON));
 		
@@ -127,8 +127,8 @@ public class AddressResourceTests {
 	
 	@Test
 	public void updateShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
-		ResultActions result = mockMvc.perform(put("/addresses/{id}", nonExistingId)
-				.content(objectMapper.writeValueAsString(addressDTO))
+		ResultActions result = mockMvc.perform(put("/students/{id}", nonExistingId)
+				.content(objectMapper.writeValueAsString(studentDTO))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON));
 		
@@ -137,7 +137,7 @@ public class AddressResourceTests {
 	
 	@Test
 	public void deleteShouldReturnNoContentWhenIdExists() throws Exception {
-		ResultActions result = mockMvc.perform(delete("/addresses/{id}", existingId)
+		ResultActions result = mockMvc.perform(delete("/students/{id}", existingId)
 				.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isNoContent());
@@ -145,7 +145,7 @@ public class AddressResourceTests {
 	
 	@Test
 	public void deleteShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
-		ResultActions result = mockMvc.perform(delete("/addresses/{id}", nonExistingId)
+		ResultActions result = mockMvc.perform(delete("/students/{id}", nonExistingId)
 				.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isNotFound());
@@ -153,7 +153,7 @@ public class AddressResourceTests {
 	
 	@Test
 	public void deleteShouldReturnBadRequestWhenIdIsDependent() throws Exception {
-		ResultActions result = mockMvc.perform(delete("/addresses/{id}", dependentId)
+		ResultActions result = mockMvc.perform(delete("/students/{id}", dependentId)
 				.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isBadRequest());
