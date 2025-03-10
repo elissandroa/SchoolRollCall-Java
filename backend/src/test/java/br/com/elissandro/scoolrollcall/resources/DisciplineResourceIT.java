@@ -43,7 +43,7 @@ public class DisciplineResourceIT {
 	void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 1000L;
-		countTotalDisciplinees = 6L;
+		countTotalDisciplinees = 5L;
 		disciplineDTO = Factory.createDisciplineDTO();
 		disciplineDTO.setId(existingId);
 	}

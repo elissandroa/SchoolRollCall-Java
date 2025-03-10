@@ -25,7 +25,7 @@ public class ScoolRepositoryTests {
 	void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 1000L;
-		countTotalSchools = 1L;
+		countTotalSchools = 2L;
 	}
 	
 	@Test

@@ -25,7 +25,7 @@ public class DisciplineRepositoryTests {
 	void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 1000L;
-		countTotalDisciplines = 4L;
+		countTotalDisciplines = 5L;
 	}
 	
 	@Test
