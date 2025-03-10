@@ -23,6 +23,7 @@ INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 1', NOW());
 INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 2', NOW());
 INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 3', NOW());
 INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 4', NOW());
+INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 5', NOW());
 
 INSERT INTO tb_school_test (name, description, discipline_id, grade, created_at) VALUES ('School Test 1', 'School Test 1 Description',1, 10, NOW());
 INSERT INTO tb_school_test (name, description, discipline_id, grade, created_at) VALUES ('School Test 2', 'School Test 2 Description',2, 9, NOW());
@@ -47,6 +48,7 @@ INSERT INTO tb_classroom (name, created_at) VALUES ('Turma 3 2025', NOW());
 
 
 INSERT INTO tb_school(name,  created_at) VALUES ('Colégio Social Madre Clélia',  NOW());
+INSERT INTO tb_school(name,  created_at) VALUES ('Colégio Social Madre Clélia 2',  NOW());
 
 INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 1', 1,1,1, NOW());
 INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 2', 1,1,1, NOW());
