@@ -8,31 +8,31 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import br.com.elissandro.scoolrollcall.entities.Address;
+import br.com.elissandro.scoolrollcall.entities.Tutor;
 import br.com.elissandro.scoolrollcall.tests.Factory;
 
 @DataJpaTest
-public class AddressRepositoryTests {
+public class TutorRepositoryTests {
 
 	private Long existingId;
 	private Long nonExistingId;
-	private Long countTotalAddresss;
+	private Long countTotalTutors;
 	
 	@Autowired
-	private AddressRepository repository;
+	private TutorRepository repository;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 1000L;
-		countTotalAddresss = 6L;
+		countTotalTutors = 4L;
 	}
 	
 	@Test
 	public void deleteShouldDeleteObjectWhenIdExists() {
 		
 		repository.deleteById(existingId);
-		Optional<Address> result = repository.findById(existingId);
+		Optional<Tutor> result = repository.findById(existingId);
 		
 		Assertions.assertFalse(result.isPresent());
 		
@@ -40,24 +40,24 @@ public class AddressRepositoryTests {
 	
 	@Test	
 	public void saveShouldPersistWithAutoincrementWhenIdIsNull() {
-		Address Address = Factory.createAddress();
-		Address.setId(null);
-		Address = repository.save(Address);
+		Tutor Tutor = Factory.createTutor();
+		Tutor.setId(null);
+		Tutor = repository.save(Tutor);
 		
-		Assertions.assertNotNull(Address.getId());
-		Assertions.assertEquals(countTotalAddresss + 1, Address.getId());
+		Assertions.assertNotNull(Tutor.getId());
+		Assertions.assertEquals(countTotalTutors + 1, Tutor.getId());
 	}
 	
 	@Test
 	public void findByIdShouldReturnNonEmptyOptionalWhenIdExists() {
-		Optional<Address> result = repository.findById(existingId);
+		Optional<Tutor> result = repository.findById(existingId);
 		
 		Assertions.assertTrue(result.isPresent());
 	}
 	
 	@Test
 	public void findByIdShouldReturnEmptyOptionalWhenIdDoesNotExists() {
-		Optional<Address> result = repository.findById(nonExistingId);
+		Optional<Tutor> result = repository.findById(nonExistingId);
 		
 		Assertions.assertTrue(result.isEmpty());
 	}

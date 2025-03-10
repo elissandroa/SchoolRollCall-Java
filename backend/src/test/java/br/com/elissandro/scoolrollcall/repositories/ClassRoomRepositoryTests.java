@@ -8,31 +8,31 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import br.com.elissandro.scoolrollcall.entities.Address;
+import br.com.elissandro.scoolrollcall.entities.ClassRoom;
 import br.com.elissandro.scoolrollcall.tests.Factory;
 
 @DataJpaTest
-public class AddressRepositoryTests {
+public class ClassRoomRepositoryTests {
 
 	private Long existingId;
 	private Long nonExistingId;
-	private Long countTotalAddresss;
+	private Long countTotalClassRooms;
 	
 	@Autowired
-	private AddressRepository repository;
+	private ClassRoomRepository repository;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 1000L;
-		countTotalAddresss = 6L;
+		countTotalClassRooms = 3L;
 	}
 	
 	@Test
 	public void deleteShouldDeleteObjectWhenIdExists() {
 		
 		repository.deleteById(existingId);
-		Optional<Address> result = repository.findById(existingId);
+		Optional<ClassRoom> result = repository.findById(existingId);
 		
 		Assertions.assertFalse(result.isPresent());
 		
@@ -40,24 +40,24 @@ public class AddressRepositoryTests {
 	
 	@Test	
 	public void saveShouldPersistWithAutoincrementWhenIdIsNull() {
-		Address Address = Factory.createAddress();
-		Address.setId(null);
-		Address = repository.save(Address);
+		ClassRoom ClassRoom = Factory.createClassRoom();
+		ClassRoom.setId(null);
+		ClassRoom = repository.save(ClassRoom);
 		
-		Assertions.assertNotNull(Address.getId());
-		Assertions.assertEquals(countTotalAddresss + 1, Address.getId());
+		Assertions.assertNotNull(ClassRoom.getId());
+		Assertions.assertEquals(countTotalClassRooms + 1, ClassRoom.getId());
 	}
 	
 	@Test
 	public void findByIdShouldReturnNonEmptyOptionalWhenIdExists() {
-		Optional<Address> result = repository.findById(existingId);
+		Optional<ClassRoom> result = repository.findById(existingId);
 		
 		Assertions.assertTrue(result.isPresent());
 	}
 	
 	@Test
 	public void findByIdShouldReturnEmptyOptionalWhenIdDoesNotExists() {
-		Optional<Address> result = repository.findById(nonExistingId);
+		Optional<ClassRoom> result = repository.findById(nonExistingId);
 		
 		Assertions.assertTrue(result.isEmpty());
 	}
