@@ -14,8 +14,6 @@ public class SchoolRollCallDTO implements Serializable{
 	private String justification;
 	private Long studentId;
 	
-	private StudentDTO student;
-	
 	public SchoolRollCallDTO() {
 	}
 	
@@ -33,7 +31,6 @@ public class SchoolRollCallDTO implements Serializable{
 		presence = entity.getPresence();
 		justification = entity.getJustification();
 		studentId = entity.getStudent().getId();
-		student = new StudentDTO(entity.getStudent());
 	}
 	
 	public Long getId() {
@@ -75,13 +72,4 @@ public class SchoolRollCallDTO implements Serializable{
 	public void setStudentId(Long studentId) {
 		this.studentId = studentId;
 	}
-	
-	public StudentDTO getStudent() {
-		return student;
-	}
-	
-	public void setStudent(StudentDTO student) {
-		this.student = student;
-	}
-
 }

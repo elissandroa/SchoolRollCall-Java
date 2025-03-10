@@ -31,7 +31,7 @@ public class SchoolTestDTO implements Serializable {
 		name = entity.getName();
 		description = entity.getDescription();
 		grade = entity.getGrade();
-		discipline = new DisciplineDTO(entity.getDiscipline());
+		disciplineId = entity.getDiscipline().getId();
 	}
 
 	public Long getId() {

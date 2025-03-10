@@ -40,11 +40,12 @@ public class SchoolRollCall implements Serializable {
 	public SchoolRollCall() {
 	}
 	
-	public SchoolRollCall(Long id, LocalDate date, Boolean presence, String justification) {
+	public SchoolRollCall(Long id, LocalDate date, Boolean presence, String justification, Student student) {
 		this.id = id;
 		this.date = date;
 		this.presence = presence;
 		this.justification = justification;
+		this.student = student;
 	}
 
 	public Long getId() {
