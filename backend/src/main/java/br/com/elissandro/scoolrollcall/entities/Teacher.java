@@ -28,6 +28,7 @@ public class Teacher implements Serializable {
 	private Long id;
 	private String name;
 	private String phone;
+	@Column(unique = true)
 	private String email;
 
 	@ManyToMany

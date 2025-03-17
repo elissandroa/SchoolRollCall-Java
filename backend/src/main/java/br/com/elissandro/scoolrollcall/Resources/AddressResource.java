@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.elissandro.scoolrollcall.dto.AddressDTO;
 import br.com.elissandro.scoolrollcall.services.AddressService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/addresses")
@@ -39,7 +40,7 @@ public class AddressResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<AddressDTO> insert(@RequestBody AddressDTO dto) {
+	public ResponseEntity<AddressDTO> insert(@Valid @RequestBody AddressDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();
@@ -47,7 +48,7 @@ public class AddressResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<AddressDTO> update(@PathVariable Long id, @RequestBody AddressDTO dto) {
+	public ResponseEntity<AddressDTO> update(@PathVariable Long id,@Valid @RequestBody AddressDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

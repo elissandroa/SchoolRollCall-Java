@@ -46,7 +46,7 @@ public class TutorService {
 	@Transactional
 	public TutorDTO insert(TutorDTO dto) {
 		Tutor entity = new Tutor();
-		entity.setName(dto.getName());
+		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new TutorDTO(entity, entity.getAddresses());
 	}

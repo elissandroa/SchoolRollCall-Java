@@ -6,11 +6,13 @@ import java.util.List;
 
 import br.com.elissandro.scoolrollcall.entities.ClassRoom;
 import br.com.elissandro.scoolrollcall.entities.Student;
+import jakarta.validation.constraints.NotBlank;
 
 public class ClassRoomDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	@NotBlank(message = "Campo obrigatório")
 	private String name;
 	
 	private List<StudentDTO> students = new ArrayList<>();

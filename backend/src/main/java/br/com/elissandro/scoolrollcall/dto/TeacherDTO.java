@@ -8,13 +8,18 @@ import java.util.Set;
 import br.com.elissandro.scoolrollcall.entities.Address;
 import br.com.elissandro.scoolrollcall.entities.Discipline;
 import br.com.elissandro.scoolrollcall.entities.Teacher;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 public class TeacherDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	@NotBlank(message = "Campo obrigatório")
 	private String name;
+	@NotBlank(message = "Campo obrigatório")
 	private String phone;
+	@Email(message = "Favor inserir um email válido")
 	private String email;
 	
 	private List<DisciplineDTO> disciplines = new ArrayList<>();

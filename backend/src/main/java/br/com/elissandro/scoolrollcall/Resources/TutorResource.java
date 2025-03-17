@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.elissandro.scoolrollcall.dto.TutorDTO;
 import br.com.elissandro.scoolrollcall.services.TutorService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/tutors")
@@ -39,7 +40,7 @@ public class TutorResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<TutorDTO> insert(@RequestBody TutorDTO dto) {
+	public ResponseEntity<TutorDTO> insert(@Valid @RequestBody TutorDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();
@@ -47,7 +48,7 @@ public class TutorResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<TutorDTO> update(@PathVariable Long id, @RequestBody TutorDTO dto) {
+	public ResponseEntity<TutorDTO> update(@PathVariable Long id,@Valid @RequestBody TutorDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

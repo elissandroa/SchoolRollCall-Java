@@ -8,12 +8,15 @@ import java.util.Set;
 import br.com.elissandro.scoolrollcall.entities.Address;
 import br.com.elissandro.scoolrollcall.entities.ClassRoom;
 import br.com.elissandro.scoolrollcall.entities.School;
+import jakarta.validation.constraints.NotBlank;
 
 public class SchoolDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	@NotBlank(message = "Campo obrigatório")
 	private String name;
+	@NotBlank(message = "Campo obrigatório")
 	private String phone;
 
 	private List<ClassRoomDTO> classRooms = new ArrayList<>();

@@ -3,11 +3,13 @@ package br.com.elissandro.scoolrollcall.dto;
 import java.io.Serializable;
 
 import br.com.elissandro.scoolrollcall.entities.Discipline;
+import jakarta.validation.constraints.NotBlank;
 
 public class DisciplineDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	@NotBlank(message = "Campo obrigatório")
 	private String name;
 	
 	public DisciplineDTO() {

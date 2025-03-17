@@ -4,14 +4,19 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import br.com.elissandro.scoolrollcall.entities.SchoolRollCall;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 
 public class SchoolRollCallDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	@FutureOrPresent(message = "A data do chamada deve ser no futuro ou no presente")
 	private LocalDate date;
+	@NotNull(message = "Campo obrigatório")
 	private Boolean presence;
 	private String justification;
+	@NotNull(message = "Campo obrigatório")
 	private Long studentId;
 	
 	public SchoolRollCallDTO() {

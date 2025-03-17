@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.elissandro.scoolrollcall.dto.InstrumentDTO;
 import br.com.elissandro.scoolrollcall.services.InstrumentService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/instruments")
@@ -39,7 +40,7 @@ public class InstrumentResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<InstrumentDTO> insert(@RequestBody InstrumentDTO dto) {
+	public ResponseEntity<InstrumentDTO> insert(@Valid @RequestBody InstrumentDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();
@@ -47,7 +48,7 @@ public class InstrumentResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<InstrumentDTO> update(@PathVariable Long id, @RequestBody InstrumentDTO dto) {
+	public ResponseEntity<InstrumentDTO> update(@PathVariable Long id,@Valid @RequestBody InstrumentDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

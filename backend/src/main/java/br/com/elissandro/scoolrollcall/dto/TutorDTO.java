@@ -7,13 +7,18 @@ import java.util.Set;
 
 import br.com.elissandro.scoolrollcall.entities.Address;
 import br.com.elissandro.scoolrollcall.entities.Tutor;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 public class TutorDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	@NotBlank(message = "Campo obrigatório")
 	private String name;
+	@Email(message = "Favor entrar com um email válido")
 	private String email;
+	@NotBlank(message = "Campo obrigatório")
 	private String phone;
 	
 	private List<AddressDTO> addresses = new ArrayList<>();

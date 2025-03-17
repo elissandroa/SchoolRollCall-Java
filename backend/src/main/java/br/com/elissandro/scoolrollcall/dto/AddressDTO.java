@@ -1,14 +1,20 @@
 package br.com.elissandro.scoolrollcall.dto;
 
 import br.com.elissandro.scoolrollcall.entities.Address;
+import jakarta.validation.constraints.NotBlank;
 
 public class AddressDTO {
 
 	private Long id;
+	@NotBlank(message = "Campo obrigatório")
 	private String street;
+	@NotBlank(message = "Campo obrigatório")
 	private String num;
+	@NotBlank(message = "Campo obrigatório")
 	private String neighborhood;
+	@NotBlank(message = "Campo obrigatório")
 	private String city;
+	@NotBlank(message = "Campo obrigatório")
 	private String state;
 	private String zipCode;
 	

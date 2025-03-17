@@ -3,14 +3,21 @@ package br.com.elissandro.scoolrollcall.dto;
 import java.io.Serializable;
 
 import br.com.elissandro.scoolrollcall.entities.SchoolTest;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public class SchoolTestDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	@NotBlank(message = "Campo obrigatório")
 	private String name;
+	@NotBlank(message = "Campo obrigatório")
 	private String description;
+	@PositiveOrZero(message = "Campo obrigatório")
 	private Double grade;
+	@NotNull(message = "Campo obrigatório")
 	private Long disciplineId;
 	
 	private DisciplineDTO discipline;

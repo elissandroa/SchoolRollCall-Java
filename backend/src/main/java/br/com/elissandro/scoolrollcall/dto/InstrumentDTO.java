@@ -1,10 +1,12 @@
 package br.com.elissandro.scoolrollcall.dto;
 
 import br.com.elissandro.scoolrollcall.entities.Instrument;
+import jakarta.validation.constraints.NotBlank;
 
 public class InstrumentDTO {
 
 	private Long id;
+	@NotBlank(message = "Campo obrigatório")
 	private String name;
 
 	public InstrumentDTO() {

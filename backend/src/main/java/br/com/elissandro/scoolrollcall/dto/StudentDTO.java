@@ -9,13 +9,18 @@ import br.com.elissandro.scoolrollcall.entities.Address;
 import br.com.elissandro.scoolrollcall.entities.SchoolTest;
 import br.com.elissandro.scoolrollcall.entities.Student;
 import br.com.elissandro.scoolrollcall.entities.Tutor;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 public class StudentDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	@NotBlank(message = "Campo obrigatório")
 	private String name;
+	@Email(message = "Favor inserir um email válido")
 	private String email;
+	@NotBlank(message = "Campo obrigatório")
 	private String phone;
 
 	private List<TutorDTO> tutors = new ArrayList<>();
