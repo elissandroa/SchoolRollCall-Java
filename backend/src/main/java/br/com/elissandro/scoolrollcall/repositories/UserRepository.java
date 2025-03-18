@@ -8,5 +8,6 @@ import br.com.elissandro.scoolrollcall.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+	User findByEmail(String email);
 
 }

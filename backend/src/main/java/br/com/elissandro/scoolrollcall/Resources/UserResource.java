@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.elissandro.scoolrollcall.dto.UserDTO;
 import br.com.elissandro.scoolrollcall.dto.UserInsertDTO;
+import br.com.elissandro.scoolrollcall.dto.UserUpdateDTO;
 import br.com.elissandro.scoolrollcall.services.UserService;
 import jakarta.validation.Valid;
 
@@ -49,7 +50,7 @@ public class UserResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<UserDTO> update(@PathVariable Long id,@Valid @RequestBody UserInsertDTO dto) {
+	public ResponseEntity<UserDTO> update(@PathVariable Long id,@Valid @RequestBody UserUpdateDTO dto) {
 		UserDTO newDto = service.update(id, dto);
 		return ResponseEntity.ok().body(newDto);
 	}

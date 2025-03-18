@@ -2,7 +2,6 @@ package br.com.elissandro.scoolrollcall.Resources.exceptions;
 
 import java.time.Instant;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -49,23 +48,11 @@ public class ResourcesExceptionHandler {
 		err.setStatus(status.value());
 		err.setError("Validation exception");
 		err.setPath(request.getRequestURI());
-		
+		err.setMessage(e.getMessage());
 		for(FieldError f : e.getBindingResult().getFieldErrors()) {
 			err.addError(f.getField(), f.getDefaultMessage());
 		}
 		
-		return ResponseEntity.status(status).body(err);
-	}
-	
-	@ExceptionHandler(DataIntegrityViolationException.class)
-	public ResponseEntity<StandardError> dataIntegrityViolation(DataIntegrityViolationException e, HttpServletRequest request) {
-		HttpStatus status = HttpStatus.BAD_REQUEST;
-		StandardError err = new StandardError();
-		err.setTimestamp(Instant.now());
-		err.setStatus(status.value());
-		err.setError("Data integrity violation");
-		err.setMessage("Email already exists");
-		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 

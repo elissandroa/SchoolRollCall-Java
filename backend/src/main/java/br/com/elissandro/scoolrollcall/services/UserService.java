@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.elissandro.scoolrollcall.dto.RoleDTO;
 import br.com.elissandro.scoolrollcall.dto.UserDTO;
 import br.com.elissandro.scoolrollcall.dto.UserInsertDTO;
+import br.com.elissandro.scoolrollcall.dto.UserUpdateDTO;
 import br.com.elissandro.scoolrollcall.entities.Role;
 import br.com.elissandro.scoolrollcall.entities.User;
 import br.com.elissandro.scoolrollcall.repositories.RoleRepository;
@@ -52,6 +53,7 @@ public class UserService {
 	@Transactional
 	public UserDTO insert(UserInsertDTO dto) {
 		User entity = new User();
+		entity.setPassword(passwordEncoder.encode(dto.getPassword()));
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new UserDTO(entity);
@@ -60,7 +62,7 @@ public class UserService {
 	
 
 	@Transactional
-	public UserDTO update(Long id, UserInsertDTO dto) {
+	public UserDTO update(Long id, UserUpdateDTO dto) {
 		try {
 			User entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
@@ -85,12 +87,11 @@ public class UserService {
 		}
 	}
 	
-	private void copyDtoToEntity(UserInsertDTO dto, User entity) {
+	private void copyDtoToEntity(UserDTO dto, User entity) {
 		dto.setId(entity.getId());
 		entity.setFirstName(dto.getFirstName());
 		entity.setLastName(dto.getLastName());
 		entity.setEmail(dto.getEmail());
-		entity.setPassword(passwordEncoder.encode(dto.getPassword()));
 		entity.getRoles().clear();
 		for(RoleDTO roleDto : dto.getRoles()) {
 			Role role = roleRepository.getReferenceById(roleDto.getId());
