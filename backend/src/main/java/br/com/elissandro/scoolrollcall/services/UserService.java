@@ -1,5 +1,6 @@
 package br.com.elissandro.scoolrollcall.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,6 +22,7 @@ import br.com.elissandro.scoolrollcall.dto.UserInsertDTO;
 import br.com.elissandro.scoolrollcall.dto.UserUpdateDTO;
 import br.com.elissandro.scoolrollcall.entities.Role;
 import br.com.elissandro.scoolrollcall.entities.User;
+import br.com.elissandro.scoolrollcall.projetions.UserDetailsProjection;
 import br.com.elissandro.scoolrollcall.repositories.RoleRepository;
 import br.com.elissandro.scoolrollcall.repositories.UserRepository;
 import br.com.elissandro.scoolrollcall.services.exceptions.DatabaseException;
@@ -26,7 +31,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -97,6 +102,24 @@ public class UserService {
 			Role role = roleRepository.getReferenceById(roleDto.getId());
 			entity.getRoles().add(role);
 		}
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
+		List<UserDetailsProjection> result = repository.searchUserAndRolesByEmail(username);
+		if (result.size() == 0) {
+			throw new UsernameNotFoundException("Email not found");
+		}
+		
+		User user = new User();
+		user.setEmail(result.get(0).getUsername());
+		user.setPassword(result.get(0).getPassword());
+		for (UserDetailsProjection projection : result) {
+			user.addRole(new Role(projection.getRoleId(), projection.getAuthority()));
+		}
+		
+		return user;
 	}
 
 }
