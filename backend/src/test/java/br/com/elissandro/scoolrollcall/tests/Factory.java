@@ -68,11 +68,11 @@ public class Factory {
 	}
 	
 	public static SchoolRollCall createSchoolRollCall() {
-		return new SchoolRollCall(null, LocalDate.of(2025, 3, 9), true, "Justificativa 1", createStudent());
+		return new SchoolRollCall(null, LocalDate.now(),true, "Justificativa 1", createStudent());
 	}
 	
 	public static SchoolRollCallDTO createSchoolRollCallDTO() {
-		return new SchoolRollCallDTO(null, LocalDate.of(2025, 3, 9), true, "Justificativa 1", 1L);
+		return new SchoolRollCallDTO(null, LocalDate.now(), true, "Justificativa 1", 1L);
 	}
 	
 	public static Student createStudent() {
@@ -100,7 +100,7 @@ public class Factory {
 	}
 	
 	public static Teacher createTeacher() {
-		return new Teacher(null, "Professor de Teste", "999999999", "teste@email.com");
+		return new Teacher(null, "Professor de Teste", "99999999","teste@gmail.com" );
 	}
 	
 	public static TeacherDTO createTeacherDTO() {
@@ -108,7 +108,7 @@ public class Factory {
 	}
 	
 	public static Tutor createTutor() {
-		return new Tutor(null, "Tutor de Teste", "999999999", "teste@email.com");
+		return new Tutor(null, "Tutor de Teste", "teste@gmail.com", "999999999");
 	}
 	
 	public static TutorDTO createTutorDTO() {

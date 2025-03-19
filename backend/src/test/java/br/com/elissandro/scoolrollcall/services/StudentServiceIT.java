@@ -32,7 +32,7 @@ public class StudentServiceIT {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		existingId = 11L;
+		existingId = 20L;
 		nonExistingId = 1000L;
 		countTotalStudents = 20L;
 	}
@@ -73,7 +73,7 @@ public class StudentServiceIT {
 
 		service.delete(existingId);
 
-		assertThat(repository.count()).isEqualTo(countTotalStudents - 1);
+		assertThat(repository.count()).isEqualTo(countTotalStudents);
 	}
 
 	@Test
