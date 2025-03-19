@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.elissandro.scoolrollcall.dto.StudentDTO;
 import br.com.elissandro.scoolrollcall.tests.Factory;
+import br.com.elissandro.scoolrollcall.tests.TokenUtil;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,6 +31,11 @@ public class StudentResourceIT {
 	private Long countTotalstudentes;
 	
 	private StudentDTO studentDTO;
+	
+	@Autowired
+	private TokenUtil tokenUtil;
+	
+	private String bearerToken, username, password;
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -45,12 +51,17 @@ public class StudentResourceIT {
 		nonExistingId = 1000L;
 		countTotalstudentes = 20L;
 		studentDTO = Factory.createStudentDTO();
+		
+		username = "maria@gmail.com";
+		password = "123456";
+		bearerToken = tokenUtil.obtainAccessToken(mockMvc, username, password);
 	}
 
 	@Test
 	public void findAllShouldReturnSortedPageWhenSortByName() throws Exception {
 		ResultActions result =
 				mockMvc.perform(get("/students?page=0&size=12&sort=name,asc")
+						.header("Authorization", "Bearer " + bearerToken)
 						.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isOk());
@@ -66,6 +77,7 @@ public class StudentResourceIT {
 		
 		ResultActions result =
 				mockMvc.perform(put("/students/{id}", existingId)
+						.header("Authorization", "Bearer " + bearerToken)
 						.content(jsonBody)
 						.contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON));
@@ -81,6 +93,7 @@ public class StudentResourceIT {
 		
 		ResultActions result =
 				mockMvc.perform(put("/students/{id}", nonExistingId)
+						.header("Authorization", "Bearer " + bearerToken)
 						.content(jsonBody)
 						.contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON));
@@ -92,6 +105,7 @@ public class StudentResourceIT {
 	public void findByIdShouldReturnstudentWhenIdExists() throws Exception {
 		ResultActions result =
 				mockMvc.perform(get("/students/{id}", existingId)
+						.header("Authorization", "Bearer " + bearerToken)
 						.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isOk());
@@ -103,6 +117,7 @@ public class StudentResourceIT {
 	public void findByIdShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
 		ResultActions result =
 				mockMvc.perform(get("/students/{id}", nonExistingId)
+						.header("Authorization", "Bearer " + bearerToken)
 						.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isNotFound());
@@ -112,6 +127,7 @@ public class StudentResourceIT {
 	public void deleteShouldReturnNoContentWhenIdExists() throws Exception {
 		ResultActions result =
 				mockMvc.perform(delete("/students/{id}", existingId)
+						.header("Authorization", "Bearer " + bearerToken)
 						.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isNoContent());
@@ -121,6 +137,7 @@ public class StudentResourceIT {
 	public void deleteShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
 		ResultActions result =
 				mockMvc.perform(delete("/students/{id}", nonExistingId)
+						.header("Authorization", "Bearer " + bearerToken)
 						.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isNotFound());
