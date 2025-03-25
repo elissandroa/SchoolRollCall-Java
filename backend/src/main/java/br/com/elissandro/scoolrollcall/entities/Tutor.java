@@ -41,6 +41,9 @@ import jakarta.persistence.Table;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
 	
+	@ManyToMany(mappedBy = "tutors")
+	private Set<Student> students = new HashSet<>();
+	
 	public Tutor() {
 	}
 	
@@ -114,6 +117,10 @@ import jakarta.persistence.Table;
 	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public Set<Student> getStudents() {
+		return students;
 	}
 
 	@Override

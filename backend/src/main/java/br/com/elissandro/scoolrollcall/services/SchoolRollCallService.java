@@ -32,7 +32,7 @@ public class SchoolRollCallService {
 	
 	@Transactional(readOnly = true)
 	public Page<SchoolRollCallDTO> findAllPaged(Pageable pageable) {
-		Page<SchoolRollCall> list = repository.findAll(pageable);
+		Page<SchoolRollCall> list = repository.searchAllSchoolRollCallPaged(pageable);
 		return list.map(x -> new SchoolRollCallDTO(x));
 	}
 
@@ -82,7 +82,7 @@ public class SchoolRollCallService {
 		entity.setDate(dto.getDate());
 		entity.setPresence(dto.getPresence());
 		entity.setJustification(dto.getJustification());
-		Student student = studentRepository.getReferenceById(dto.getStudentId());
+		Student student = studentRepository.getReferenceById(dto.getStudent().getId());
 		entity.setStudent(student);
 	}
 }

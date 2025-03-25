@@ -48,11 +48,11 @@ public class StudentDTO implements Serializable {
 	public StudentDTO(Student entity) {
 		id = entity.getId();
 		name = entity.getName();
+		email = entity.getEmail();
+		phone = entity.getPhone();
 		graduation = new GraduationDTO(entity.getGraduation());
 		classRoom = new ClassRoomDTO(entity.getClassRoom());
 		instrument = new InstrumentDTO(entity.getInstrument());
-		email = entity.getEmail();
-		phone = entity.getPhone();
 	}
 
 	public StudentDTO(Student entity, Set<Tutor> tutors, Set<SchoolTest> schoolTests, Set<Address> addresses) {

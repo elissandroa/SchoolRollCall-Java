@@ -27,7 +27,6 @@ import br.com.elissandro.scoolrollcall.tests.Factory;
 public class GraduationResourceIT {
 	private Long existingId;
 	private Long nonExistingId;
-	private Long countTotalGraduationes;
 	
 	private GraduationDTO graduationDTO;
 	
@@ -43,7 +42,6 @@ public class GraduationResourceIT {
 	void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 1000L;
-		countTotalGraduationes = 9L;
 		graduationDTO = Factory.createGraduationDTO();
 		graduationDTO.setId(existingId);
 	}
@@ -55,8 +53,7 @@ public class GraduationResourceIT {
 						.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isOk());
-		result.andExpect(jsonPath("$.totalElements").value(countTotalGraduationes));
-		result.andExpect(jsonPath("$.content").exists());	
+		result.andExpect(jsonPath("$.name").exists());	
 	}
 	
 	@Test

@@ -31,16 +31,16 @@ public class TutorService {
 	private AddressRepository addressRepository;
 
 	@Transactional(readOnly = true)
-	public Page<TutorDTO> findAllPaged(Pageable pageable) {
-		Page<Tutor> list = repository.findAll(pageable);
-		return list.map(x -> new TutorDTO(x, x.getAddresses()));
+	public Page<TutorDTO> findAllPaged(String name, Pageable pageable) {
+		Page<Tutor> list = repository.searchAllTutors(name, pageable);
+		return list.map(x -> new TutorDTO(x, x.getAddresses(), x.getStudents()));
 	}
 
 	@Transactional(readOnly = true)
 	public TutorDTO findById(Long id) {
 		Optional<Tutor> obj = repository.findById(id);
 		Tutor entity = obj.orElseThrow( () -> new ResourceNotFoundException("Entity not found"));
-		return new TutorDTO(entity, entity.getAddresses());
+		return new TutorDTO(entity, entity.getAddresses(), entity.getStudents());
 	}
 
 	@Transactional
@@ -48,7 +48,7 @@ public class TutorService {
 		Tutor entity = new Tutor();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
-		return new TutorDTO(entity, entity.getAddresses());
+		return new TutorDTO(entity, entity.getAddresses(), entity.getStudents());
 	}
 
 	@Transactional
@@ -57,7 +57,7 @@ public class TutorService {
 			Tutor entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
-			return new TutorDTO(entity, entity.getAddresses());
+			return new TutorDTO(entity, entity.getAddresses(), entity.getStudents());
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}

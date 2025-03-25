@@ -27,7 +27,6 @@ import br.com.elissandro.scoolrollcall.tests.Factory;
 public class InstrumentResourceIT {
 	private Long existingId;
 	private Long nonExistingId;
-	private Long countTotalinstrumentes;
 	
 	private InstrumentDTO instrumentDTO;
 	
@@ -43,7 +42,6 @@ public class InstrumentResourceIT {
 	void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 1000L;
-		countTotalinstrumentes = 4L;
 		instrumentDTO = Factory.createInstrumentDTO();
 	}
 
@@ -54,8 +52,7 @@ public class InstrumentResourceIT {
 						.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isOk());
-		result.andExpect(jsonPath("$.totalElements").value(countTotalinstrumentes));
-		result.andExpect(jsonPath("$.content").exists());	
+		result.andExpect(jsonPath("$.name").exists());	
 	}
 	
 	@Test

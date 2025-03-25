@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -47,20 +46,20 @@ public class DisciplineResourceTest {
 	private ObjectMapper objectMapper;
 	
 	private DisciplineDTO disciplineDTO;
-	private PageImpl<DisciplineDTO> page;
 	private long existingId;
 	private long nonExistingId;
 	private long dependentId;
+	private List<DisciplineDTO> list;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		disciplineDTO = Factory.createDisciplineDTO();
-		page = new PageImpl<>(List.of(disciplineDTO));
 		existingId = 1L;
 		nonExistingId = 2L;
 		dependentId = 3L;
+		list = List.of(disciplineDTO);
 		
-		when(service.findAllPaged(any())).thenReturn(page);
+		when(service.findAll()).thenReturn(list);
 		
 		
 		when(service.findById(existingId)).thenReturn(disciplineDTO);

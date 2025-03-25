@@ -14,10 +14,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.elissandro.scoolrollcall.dto.DisciplineDTO;
@@ -36,7 +32,7 @@ public class DisciplineServiceTests {
 	private Long dependentId;
 	private DisciplineDTO DisciplineDTO;
 	private Discipline Discipline;
-	private PageImpl<Discipline> page;
+	private List<Discipline> list;
 	
 	@Mock
 	private DisciplineRepository repository;
@@ -52,7 +48,7 @@ public class DisciplineServiceTests {
 		dependentId = 2L;
 		DisciplineDTO = Factory.createDisciplineDTO();
 		Discipline = Factory.createDiscipline();
-		page = new PageImpl<>(List.of(Discipline));
+		list = List.of(Discipline);
 		
 
 		when(repository.existsById(existingId)).thenReturn(true);
@@ -62,7 +58,12 @@ public class DisciplineServiceTests {
 		when(repository.findById(existingId)).thenReturn(Optional.of(new Discipline()));
 		when(repository.findById(nonExistingId)).thenReturn(Optional.empty());
 		
-		when(repository.findAll((Pageable)ArgumentMatchers.any())).thenReturn(page);
+		when(repository.findAll()).thenReturn(list);
+		
+		when(repository.save(ArgumentMatchers.any())).thenReturn(Discipline);
+		
+		when(repository.getReferenceById(existingId)).thenReturn(Discipline);
+		when(repository.getReferenceById(nonExistingId)).thenThrow(EntityNotFoundException.class);
 		
 		when(repository.save(ArgumentMatchers.any())).thenReturn(Discipline);
 		
@@ -90,11 +91,10 @@ public class DisciplineServiceTests {
 		}
 	
 	@Test	
-	public void findAllPagedShouldReturnPage() {
-		Pageable pageable = PageRequest.of(0, 10);
-		Page<DisciplineDTO> result = service.findAllPaged(pageable);
+	public void findAllShouldReturnList() {
+		List<DisciplineDTO> result = service.findAll();
 		Assertions.assertNotNull(result);
-		Mockito.verify(repository, Mockito.times(1)).findAll(PageRequest.of(0, 10));
+		Mockito.verify(repository, Mockito.times(1)).findAll();
 	}
 	
 	@Test

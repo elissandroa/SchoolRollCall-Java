@@ -1,5 +1,5 @@
-INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Alex', 'Brown', 'alex@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
-INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Maria', 'Green', 'maria@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
+INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Alex', 'Brown', 'alex@gmail.com','$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
+INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Maria', 'Green', 'maria@gmail.com','$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
 
 INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
@@ -29,6 +29,8 @@ INSERT INTO tb_tutor (name, created_at) VALUES ('Gilberto Brandt', NOW());
 INSERT INTO tb_tutor (name, created_at) VALUES ('Jane Doe', NOW());
 INSERT INTO tb_tutor (name, created_at) VALUES ('John Doe', NOW());
 INSERT INTO tb_tutor (name, created_at) VALUES ('Mary Doe', NOW());
+INSERT INTO tb_tutor (name, created_at) VALUES ('Peter Doe', NOW());
+INSERT INTO tb_tutor (name, created_at) VALUES ('Sue Doe', NOW());
 
 INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 1', NOW());
 INSERT INTO tb_discipline (name, created_at) VALUES ('Discipline 2', NOW());
@@ -48,10 +50,15 @@ INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, creat
 INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, created_at) VALUES ('Street 5', '1213', 'City 5','Bairro 5','State 5','808828', NOW());
 INSERT INTO tb_address (street, num, city, neighborhood,  state, zip_code, created_at) VALUES ('Street 6', '1415', 'City 6','Bairro 6','State 6','808828', NOW());
 
+
 INSERT INTO tb_teacher (name, phone, created_at) VALUES ('Teacher 1', '99999999', NOW());
 INSERT INTO tb_teacher (name, phone, created_at) VALUES ('Teacher 2', '88888888', NOW());
 INSERT INTO tb_teacher (name, phone, created_at) VALUES ('Teacher 3', '77777777', NOW());
 INSERT INTO tb_teacher (name, phone, created_at) VALUES ('Teacher 4', '66666666', NOW());
+INSERT INTO tb_teacher (name, phone, created_at) VALUES ('Teacher 5', '55555555', NOW());
+INSERT INTO tb_teacher (name, phone, created_at) VALUES ('Teacher 6', '44444444', NOW());
+INSERT INTO tb_teacher (name, phone, created_at) VALUES ('Teacher 7', '33333333', NOW());
+INSERT INTO tb_teacher (name, phone, created_at) VALUES ('Teacher 8', '22222222', NOW());
 
 INSERT INTO tb_classroom (name, created_at) VALUES ('Turma 1 2025', NOW());
 INSERT INTO tb_classroom (name, created_at) VALUES ('Turma 2 2025', NOW());
@@ -61,26 +68,49 @@ INSERT INTO tb_classroom (name, created_at) VALUES ('Turma 3 2025', NOW());
 INSERT INTO tb_school(name,  created_at) VALUES ('Colégio Social Madre Clélia',  NOW());
 INSERT INTO tb_school(name,  created_at) VALUES ('Colégio Social Madre Clélia 2',  NOW());
 
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 1', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 2', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 3', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 4', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 5', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 6', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 7', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 8', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 9', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 10', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 11', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 12', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 13', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 14', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 15', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 16', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 17', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 18', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 19', 1,1,1, NOW());
-INSERT INTO tb_student(name, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 20', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 1','student1@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 2','student2@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 3','student3@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 4','student4@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 5','student5@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 6','student6@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 7','student7@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 8','student8@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 9','student9@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 10','studen10@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 11','student11@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 12','student12@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 13','student13@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 14','student14@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 15','student15@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 16','student16@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 17','student17@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 18','student18@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 19','student19@gmail.com','9999-9999', 1,1,1, NOW());
+INSERT INTO tb_student(name, email, phone, class_room_id, instrument_id, graduation_id, created_at) VALUES ('Student 20','student20@gmail.com','9999-9999', 1,1,1, NOW());
+
+
+INSERT INTO tb_student_tutor (student_id, tutor_id) VALUES (1, 1);
+INSERT INTO tb_student_tutor (student_id, tutor_id) VALUES (2, 1);
+INSERT INTO tb_student_tutor (student_id, tutor_id) VALUES (3, 2);
+INSERT INTO tb_student_tutor (student_id, tutor_id) VALUES (4, 1);
+INSERT INTO tb_student_tutor (student_id, tutor_id) VALUES (5, 2);
+
+INSERT INTO tb_tutor_address (tutor_id, address_id) VALUES (1, 1);
+INSERT INTO tb_tutor_address (tutor_id, address_id) VALUES (2, 2);
+INSERT INTO tb_tutor_address (tutor_id, address_id) VALUES (3, 3);
+INSERT INTO tb_tutor_address (tutor_id, address_id) VALUES (4, 4);
+INSERT INTO tb_tutor_address (tutor_id, address_id) VALUES (5, 5);
+
+INSERT INTO tb_teacher_address (teacher_id, address_id) VALUES (1, 1);
+INSERT INTO tb_teacher_address (teacher_id, address_id) VALUES (2, 2);
+INSERT INTO tb_teacher_address (teacher_id, address_id) VALUES (3, 3);
+INSERT INTO tb_teacher_address (teacher_id, address_id) VALUES (4, 4);
+
+INSERT INTO tb_teacher_discipline (teacher_id, discipline_id) VALUES (1, 1);
+INSERT INTO tb_teacher_discipline (teacher_id, discipline_id) VALUES (2, 2);
+INSERT INTO tb_teacher_discipline (teacher_id, discipline_id) VALUES (3, 3);
+INSERT INTO tb_teacher_discipline (teacher_id, discipline_id) VALUES (4, 4);
 
 
 

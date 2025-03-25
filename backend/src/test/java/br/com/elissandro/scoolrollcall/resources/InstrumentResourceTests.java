@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -47,20 +46,21 @@ public class InstrumentResourceTests {
 	private ObjectMapper objectMapper;
 	
 	private InstrumentDTO InstrumentDTO;
-	private PageImpl<InstrumentDTO> page;
 	private long existingId;
 	private long nonExistingId;
 	private long dependentId;
 	
+	private List<InstrumentDTO> list;
+	
 	@BeforeEach
 	void setUp() throws Exception {
 		InstrumentDTO = Factory.createInstrumentDTO();
-		page = new PageImpl<>(List.of(InstrumentDTO));
 		existingId = 1L;
 		nonExistingId = 2L;
 		dependentId = 3L;
+		list = List.of(InstrumentDTO);
 		
-		when(service.findAllPaged(any())).thenReturn(page);
+		when(service.findAll()).thenReturn(list);
 		
 		
 		when(service.findById(existingId)).thenReturn(InstrumentDTO);

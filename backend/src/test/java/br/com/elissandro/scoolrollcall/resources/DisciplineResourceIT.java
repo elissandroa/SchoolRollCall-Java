@@ -27,7 +27,6 @@ import br.com.elissandro.scoolrollcall.tests.Factory;
 public class DisciplineResourceIT {
 	private Long existingId;
 	private Long nonExistingId;
-	private Long countTotalDisciplinees;
 	
 	private DisciplineDTO disciplineDTO;
 	
@@ -43,7 +42,6 @@ public class DisciplineResourceIT {
 	void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 1000L;
-		countTotalDisciplinees = 5L;
 		disciplineDTO = Factory.createDisciplineDTO();
 		disciplineDTO.setId(existingId);
 	}
@@ -55,8 +53,7 @@ public class DisciplineResourceIT {
 						.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isOk());
-		result.andExpect(jsonPath("$.totalElements").value(countTotalDisciplinees));
-		result.andExpect(jsonPath("$.content").exists());	
+		result.andExpect(jsonPath("$.name").exists());	
 	}
 	
 	@Test

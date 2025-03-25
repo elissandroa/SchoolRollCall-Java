@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -47,7 +46,7 @@ public class GraduationResourceTests {
 	private ObjectMapper objectMapper;
 	
 	private GraduationDTO graduationDTO;
-	private PageImpl<GraduationDTO> page;
+	private List<GraduationDTO> list;
 	private long existingId;
 	private long nonExistingId;
 	private long dependentId;
@@ -55,12 +54,12 @@ public class GraduationResourceTests {
 	@BeforeEach
 	void setUp() throws Exception {
 		graduationDTO = Factory.createGraduationDTO();
-		page = new PageImpl<>(List.of(graduationDTO));
+		list = List.of(graduationDTO);
 		existingId = 1L;
 		nonExistingId = 2L;
 		dependentId = 3L;
 		
-		when(service.findAllPaged(any())).thenReturn(page);
+		when(service.findAll()).thenReturn(list);
 		
 		
 		when(service.findById(existingId)).thenReturn(graduationDTO);

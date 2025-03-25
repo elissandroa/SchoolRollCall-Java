@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,8 +31,10 @@ public class StudentResource {
 
 	@PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
 	@GetMapping
-	public ResponseEntity<Page<StudentDTO>> findAll(Pageable pageable) {
-		Page<StudentDTO> list = service.findAllPaged(pageable);
+	public ResponseEntity<Page<StudentDTO>> findAll(
+			@RequestParam(defaultValue = "") String name,
+			Pageable pageable) {
+		Page<StudentDTO> list = service.findAllPaged(name, pageable);
 		return ResponseEntity.ok().body(list);
 	}
 	

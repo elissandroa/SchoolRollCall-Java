@@ -3,13 +3,13 @@ package br.com.elissandro.scoolrollcall.services;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.elissandro.scoolrollcall.dto.InstrumentDTO;
@@ -38,32 +38,26 @@ public class InstrumentServiceIT {
 	}
 
 	@Test
-	public void findAllPagedShouldReturnPage() {
+	public void findAllShouldReturnPage() {
 
-		PageRequest pageRequest = PageRequest.of(0, 10);
-
-		Page<InstrumentDTO> result = service.findAllPaged(pageRequest);
+		List<InstrumentDTO> result = service.findAll();
 
 		Assertions.assertFalse(result.isEmpty());
 
 	}
 
 	@Test
-	public void findAllPagedShouldReturnEmptyPageWhenPageDoesNotExist() {
+	public void findAllShouldReturnEmptyPageWhenPageDoesNotExist() {
 
-		PageRequest pageRequest = PageRequest.of(50, 10);
-
-		Page<InstrumentDTO> result = service.findAllPaged(pageRequest);
+		List<InstrumentDTO> result = service.findAll();
 
 		Assertions.assertTrue(result.isEmpty());
 	}
 
 	@Test
-	public void findAllPagedShouldReturnSortedPageWhenSortByName() {
+	public void findAllShouldReturnSortedPageWhenSortByName() {
 
-		PageRequest pageRequest = PageRequest.of(0, 10);
-
-		Page<InstrumentDTO> result = service.findAllPaged(pageRequest);
+		List<InstrumentDTO> result = service.findAll();
 
 		Assertions.assertFalse(result.isEmpty());
 	}

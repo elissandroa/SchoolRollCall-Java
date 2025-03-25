@@ -14,10 +14,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.elissandro.scoolrollcall.dto.GraduationDTO;
@@ -36,7 +32,7 @@ public class GraduationServiceTests {
 	private Long dependentId;
 	private GraduationDTO GraduationDTO;
 	private Graduation Graduation;
-	private PageImpl<Graduation> page;
+	private List<Graduation> list;
 	
 	@Mock
 	private GraduationRepository repository;
@@ -52,7 +48,7 @@ public class GraduationServiceTests {
 		dependentId = 2L;
 		GraduationDTO = Factory.createGraduationDTO();
 		Graduation = Factory.createGraduation();
-		page = new PageImpl<>(List.of(Graduation));
+		list = List.of(Graduation);
 		
 
 		when(repository.existsById(existingId)).thenReturn(true);
@@ -62,7 +58,7 @@ public class GraduationServiceTests {
 		when(repository.findById(existingId)).thenReturn(Optional.of(new Graduation()));
 		when(repository.findById(nonExistingId)).thenReturn(Optional.empty());
 		
-		when(repository.findAll((Pageable)ArgumentMatchers.any())).thenReturn(page);
+		when(repository.findAll()).thenReturn(list);
 		
 		when(repository.save(ArgumentMatchers.any())).thenReturn(Graduation);
 		
@@ -90,11 +86,10 @@ public class GraduationServiceTests {
 		}
 	
 	@Test	
-	public void findAllPagedShouldReturnPage() {
-		Pageable pageable = PageRequest.of(0, 10);
-		Page<GraduationDTO> result = service.findAllPaged(pageable);
+	public void findAllShouldReturnPage() {
+		List<GraduationDTO> result = service.findAll();
 		Assertions.assertNotNull(result);
-		Mockito.verify(repository, Mockito.times(1)).findAll(PageRequest.of(0, 10));
+		Mockito.verify(repository, Mockito.times(1)).findAll();
 	}
 	
 	@Test

@@ -55,9 +55,9 @@ public class StudentService {
 	
 
 	@Transactional(readOnly = true)
-	public Page<StudentDTO> findAllPaged(Pageable pageable) {
-		Page<Student> list = repository.findAll(pageable);
-		return list.map(x -> new StudentDTO(x, x.getTutors(), x.getSchoolTests(), x.getAddresses()));
+	public Page<StudentDTO> findAllPaged(String name, Pageable pageable) {
+		Page<Student> list = repository.searchStudenWidthGraduationInstrumentAndClassRoom(name, pageable);
+		return list.map(x -> new StudentDTO(x));
 	}
 
 	@Transactional(readOnly = true)

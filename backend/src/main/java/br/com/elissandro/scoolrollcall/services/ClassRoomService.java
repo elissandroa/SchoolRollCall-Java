@@ -33,8 +33,8 @@ public class ClassRoomService {
 
 	@Transactional(readOnly = true)
 	public Page<ClassRoomDTO> findAllPaged(Pageable pageable) {
-		Page<ClassRoom> list = repository.findAll(pageable);
-		return list.map(x -> new ClassRoomDTO(x));
+		Page<ClassRoom> list = repository.searchClassRoomWithStudents(pageable);
+		return list.map(x -> new ClassRoomDTO(x, x.getStudents()));
 	}
 
 	@Transactional(readOnly = true)

@@ -14,10 +14,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.elissandro.scoolrollcall.dto.InstrumentDTO;
@@ -36,7 +32,7 @@ public class InstrumentServiceTests {
 	private Long dependentId;
 	private InstrumentDTO InstrumentDTO;
 	private Instrument Instrument;
-	private PageImpl<Instrument> page;
+	private List<InstrumentDTO> list;
 	
 	@Mock
 	private InstrumentRepository repository;
@@ -52,7 +48,7 @@ public class InstrumentServiceTests {
 		dependentId = 2L;
 		InstrumentDTO = Factory.createInstrumentDTO();
 		Instrument = Factory.createInstrument();
-		page = new PageImpl<>(List.of(Instrument));
+		list = List.of(InstrumentDTO);
 		
 
 		when(repository.existsById(existingId)).thenReturn(true);
@@ -62,7 +58,7 @@ public class InstrumentServiceTests {
 		when(repository.findById(existingId)).thenReturn(Optional.of(new Instrument()));
 		when(repository.findById(nonExistingId)).thenReturn(Optional.empty());
 		
-		when(repository.findAll((Pageable)ArgumentMatchers.any())).thenReturn(page);
+		when(repository.findAll().stream().map(x -> new InstrumentDTO(x)).toList()).thenReturn(list);
 		
 		when(repository.save(ArgumentMatchers.any())).thenReturn(Instrument);
 		
@@ -90,11 +86,10 @@ public class InstrumentServiceTests {
 		}
 	
 	@Test	
-	public void findAllPagedShouldReturnPage() {
-		Pageable pageable = PageRequest.of(0, 10);
-		Page<InstrumentDTO> result = service.findAllPaged(pageable);
+	public void findAllShouldReturnPage() {
+		List<InstrumentDTO> result = service.findAll();
 		Assertions.assertNotNull(result);
-		Mockito.verify(repository, Mockito.times(1)).findAll(PageRequest.of(0, 10));
+		Mockito.verify(repository, Mockito.times(1)).findAll();
 	}
 	
 	@Test

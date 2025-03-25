@@ -38,8 +38,8 @@ public class TeacherService {
 	private DisciplineRepository disciplineRepository;
 
 	@Transactional(readOnly = true)
-	public Page<TeacherDTO> findAllPaged(Pageable pageable) {
-		Page<Teacher> list = repository.findAll(pageable);
+	public Page<TeacherDTO> findAllPaged(String name, Pageable pageable) {
+		Page<Teacher> list = repository.searchAllTeachers(name, pageable);
 		return list.map(x -> new TeacherDTO(x, x.getDisciplines(), x.getAddresses()));
 	}
 

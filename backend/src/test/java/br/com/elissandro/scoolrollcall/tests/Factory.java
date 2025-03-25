@@ -72,7 +72,7 @@ public class Factory {
 	}
 	
 	public static SchoolRollCallDTO createSchoolRollCallDTO() {
-		return new SchoolRollCallDTO(null, LocalDate.now(), true, "Justificativa 1", 1L);
+		return new SchoolRollCallDTO(createSchoolRollCall());
 	}
 	
 	public static Student createStudent() {

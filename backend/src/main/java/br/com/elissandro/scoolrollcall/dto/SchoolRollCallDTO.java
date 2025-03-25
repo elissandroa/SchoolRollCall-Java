@@ -16,18 +16,17 @@ public class SchoolRollCallDTO implements Serializable{
 	@NotNull(message = "Campo obrigatório")
 	private Boolean presence;
 	private String justification;
-	@NotNull(message = "Campo obrigatório")
-	private Long studentId;
+	
+	private StudentDTO student;
 	
 	public SchoolRollCallDTO() {
 	}
 	
-	public SchoolRollCallDTO(Long id, LocalDate date, Boolean presence, String justification, Long studentId) {	
+	public SchoolRollCallDTO(Long id, LocalDate date, Boolean presence, String justification) {	
 		this.id = id;
 		this.date = date;
 		this.presence = presence;
 		this.justification = justification;
-		this.studentId = studentId;
 	}
 	
 	public SchoolRollCallDTO(SchoolRollCall entity) {
@@ -35,7 +34,7 @@ public class SchoolRollCallDTO implements Serializable{
 		date = entity.getDate();
 		presence = entity.getPresence();
 		justification = entity.getJustification();
-		studentId = entity.getStudent().getId();
+		student = new StudentDTO(entity.getStudent());
 	}
 	
 	public Long getId() {
@@ -70,11 +69,7 @@ public class SchoolRollCallDTO implements Serializable{
 		this.justification = justification;
 	}
 
-	public Long getStudentId() {
-		return studentId;
-	}
-	
-	public void setStudentId(Long studentId) {
-		this.studentId = studentId;
+	public StudentDTO getStudent() {
+		return student;
 	}
 }

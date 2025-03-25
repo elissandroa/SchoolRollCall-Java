@@ -32,7 +32,7 @@ public class SchoolTestService {
 
 	@Transactional(readOnly = true)
 	public Page<SchoolTestDTO> findAllPaged(Pageable pageable) {
-		Page<SchoolTest> list = repository.findAll(pageable);
+		Page<SchoolTest> list = repository.searchAllSchoolTests(pageable);
 		return list.map(x -> new SchoolTestDTO(x));
 	}
 
@@ -81,7 +81,7 @@ public class SchoolTestService {
 		entity.setName(dto.getName());
 		entity.setDescription(dto.getDescription());
 		entity.setGrade(dto.getGrade());
-		Discipline discipline = disciplineRepository.getReferenceById(dto.getDisciplineId());
+		Discipline discipline = disciplineRepository.getReferenceById(dto.getDiscipline().getId());
 		entity.setDiscipline(discipline);
 	}
 }
